@@ -3,13 +3,13 @@ package by.innowise.arraystask.entity;
 import java.util.Arrays;
 import java.util.StringJoiner;
 
-public class CustomArray {
+public class CustomIntegerArray {
     private int[] integerArray;
 
-    public CustomArray(){
+    public CustomIntegerArray(){
     }
 
-    public CustomArray(int[] array){
+    public CustomIntegerArray(int[] array){
         integerArray = array;
     }
 
@@ -25,7 +25,7 @@ public class CustomArray {
     public boolean equals(Object o) {
         if (o == null || (getClass() != o.getClass())) return false;
 
-        CustomArray that = (CustomArray) o;
+        CustomIntegerArray that = (CustomIntegerArray) o;
 
         return Arrays.equals(integerArray, that.integerArray);
     }
@@ -37,7 +37,7 @@ public class CustomArray {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", CustomArray.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", CustomIntegerArray.class.getSimpleName() + "[", "]")
                 .add("integerArray=" + Arrays.toString(integerArray))
                 .toString();
     }
