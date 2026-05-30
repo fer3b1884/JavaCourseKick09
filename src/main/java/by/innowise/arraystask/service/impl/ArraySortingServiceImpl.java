@@ -1,9 +1,10 @@
 package by.innowise.arraystask.service.impl;
 
 import by.innowise.arraystask.entity.CustomIntegerArray;
-import by.innowise.arraystask.service.ArraySortService;
+import by.innowise.arraystask.service.ArraySortingService;
 
-public class ArraySortServiceImpl implements ArraySortService {
+public class ArraySortingServiceImpl implements ArraySortingService {
+    @Override
     public void bubbleSort(CustomIntegerArray customIntegerArray){
         int[] elements = customIntegerArray.getArray();
         int length = elements.length;
@@ -19,6 +20,7 @@ public class ArraySortServiceImpl implements ArraySortService {
         }
     }
 
+    @Override
     public void insertionSort(CustomIntegerArray customIntegerArray){
         int[] elements = customIntegerArray.getArray();
         int length = elements.length;

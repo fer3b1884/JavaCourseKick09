@@ -6,6 +6,7 @@ import by.innowise.arraystask.service.ArrayCalculationService;
 import java.util.Optional;
 
 public class ArrayCalculationServiceImpl implements ArrayCalculationService {
+    @Override
     public Optional<Integer> findMin(CustomIntegerArray customIntegerArray) {
         int[] integerArray = customIntegerArray.getArray();
 
@@ -19,6 +20,7 @@ public class ArrayCalculationServiceImpl implements ArrayCalculationService {
         return Optional.of(minElement);
     }
 
+    @Override
     public Optional<Integer> findMax(CustomIntegerArray customIntegerArray) {
         int[] integerArray = customIntegerArray.getArray();
 
@@ -32,6 +34,7 @@ public class ArrayCalculationServiceImpl implements ArrayCalculationService {
         return Optional.of(maxElement);
     }
 
+    @Override
     public Optional<Integer> calculateSum(CustomIntegerArray customIntegerArray) {
         int[] integerArray = customIntegerArray.getArray();
 
@@ -43,6 +46,7 @@ public class ArrayCalculationServiceImpl implements ArrayCalculationService {
         return Optional.of(sum);
     }
 
+    @Override
     public Optional<Double> calculateAverage(CustomIntegerArray customIntegerArray) {
         int[] integerArray = customIntegerArray.getArray();
 
