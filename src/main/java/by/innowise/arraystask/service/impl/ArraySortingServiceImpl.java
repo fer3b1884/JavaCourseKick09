@@ -1,11 +1,17 @@
 package by.innowise.arraystask.service.impl;
 
 import by.innowise.arraystask.entity.CustomIntegerArray;
+import by.innowise.arraystask.exception.ArrayTaskException;
 import by.innowise.arraystask.service.ArraySortingService;
+
+import java.util.Optional;
 
 public class ArraySortingServiceImpl implements ArraySortingService {
     @Override
-    public void bubbleSort(CustomIntegerArray customIntegerArray){
+    public void bubbleSort(CustomIntegerArray customIntegerArray) throws ArrayTaskException {
+        if (customIntegerArray == null) {
+            throw new ArrayTaskException("The passed CustomIntegerArray object reference is null");
+        }
         int[] elements = customIntegerArray.getArray();
         int length = elements.length;
         for (int i = 0; i < length - 1; i++) {
@@ -18,10 +24,14 @@ public class ArraySortingServiceImpl implements ArraySortingService {
                 }
             }
         }
+        customIntegerArray.setArray(elements);
     }
 
     @Override
-    public void insertionSort(CustomIntegerArray customIntegerArray){
+    public void insertionSort(CustomIntegerArray customIntegerArray) throws ArrayTaskException {
+        if (customIntegerArray == null) {
+            throw new ArrayTaskException("The passed CustomIntegerArray object reference is null");
+        }
         int[] elements = customIntegerArray.getArray();
         int length = elements.length;
         for (int i = 1; i < length; ++i) {
@@ -33,5 +43,6 @@ public class ArraySortingServiceImpl implements ArraySortingService {
             }
             elements[j + 1] = key;
         }
+        customIntegerArray.setArray(elements);
     }
 }

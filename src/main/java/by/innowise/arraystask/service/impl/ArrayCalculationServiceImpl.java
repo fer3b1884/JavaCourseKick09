@@ -8,11 +8,15 @@ import java.util.Optional;
 public class ArrayCalculationServiceImpl implements ArrayCalculationService {
     @Override
     public Optional<Integer> findMin(CustomIntegerArray customIntegerArray) {
-        int[] integerArray = customIntegerArray.getArray();
-
-        int minElement = integerArray[0];
-
-        for (int element : integerArray) {
+        if (customIntegerArray == null) {
+            return Optional.empty();
+        }
+        int[] array = customIntegerArray.getArray();
+        if (array.length == 0) {
+            return Optional.empty();
+        }
+        int minElement = array[0];
+        for (int element : array) {
             if (element < minElement){
                 minElement = element;
             }
@@ -22,11 +26,15 @@ public class ArrayCalculationServiceImpl implements ArrayCalculationService {
 
     @Override
     public Optional<Integer> findMax(CustomIntegerArray customIntegerArray) {
-        int[] integerArray = customIntegerArray.getArray();
-
-        int maxElement = integerArray[0];
-
-        for (int element : integerArray) {
+        if (customIntegerArray == null) {
+            return Optional.empty();
+        }
+        int[] array = customIntegerArray.getArray();
+        if (array.length == 0) {
+            return Optional.empty();
+        }
+        int maxElement = array[0];
+        for (int element : array) {
             if (element > maxElement){
                 maxElement = element;
             }
@@ -36,11 +44,15 @@ public class ArrayCalculationServiceImpl implements ArrayCalculationService {
 
     @Override
     public Optional<Integer> calculateSum(CustomIntegerArray customIntegerArray) {
-        int[] integerArray = customIntegerArray.getArray();
-
+        if (customIntegerArray == null) {
+            return Optional.empty();
+        }
+        int[] array = customIntegerArray.getArray();
+        if (array.length == 0) {
+            return Optional.empty();
+        }
         int sum = 0;
-
-        for (int element : integerArray) {
+        for (int element : array) {
             sum += element;
         }
         return Optional.of(sum);
@@ -48,11 +60,15 @@ public class ArrayCalculationServiceImpl implements ArrayCalculationService {
 
     @Override
     public Optional<Double> calculateAverage(CustomIntegerArray customIntegerArray) {
-        int[] integerArray = customIntegerArray.getArray();
-
+        if (customIntegerArray == null) {
+            return Optional.empty();
+        }
+        int[] array = customIntegerArray.getArray();
+        if (array.length == 0) {
+            return Optional.empty();
+        }
         Optional<Integer> optionalSum = calculateSum(customIntegerArray);
-
-        double average = (double) optionalSum.get() / integerArray.length;
+        double average = (double) optionalSum.get() / array.length;
         return Optional.of(average);
     }
 }

@@ -6,19 +6,33 @@ import java.util.StringJoiner;
 public class CustomIntegerArray {
     private int[] integerArray;
 
-    public CustomIntegerArray(){
+    public CustomIntegerArray() {
+        this.integerArray = new int[0];  // avoid null
     }
 
-    public CustomIntegerArray(int[] array){
-        integerArray = array;
+    public CustomIntegerArray(int[] array) {
+        if (array == null) {
+            this.integerArray = new int[0];
+        } else {
+            this.integerArray = Arrays.copyOf(array, array.length);
+//            this.integerArray = array;
+        }
     }
 
     public int[] getArray() {
-        return integerArray;
+//        return integerArray;
+        int length = integerArray.length;
+        int[] arrayCopy = Arrays.copyOf(integerArray, length);
+        return arrayCopy;
     }
 
     public void setArray(int[] array) {
-        integerArray = array;
+        if (array == null) {
+            this.integerArray = new int[0];
+        } else {
+            this.integerArray = Arrays.copyOf(array, array.length);
+//            this.integerArray = array;
+        }
     }
 
     @Override
