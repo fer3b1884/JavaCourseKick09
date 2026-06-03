@@ -18,20 +18,19 @@ class ArrayFileReaderTest {
     }
 
     @Test
-    void readFileData() throws ArrayTaskException {
+    void readFileDataShouldReturnAllLinesFromExistingFile() throws ArrayTaskException {
         // given
-        String validPath = "src/main/resources/data/numbers.txt";
+        String validPath = "data/numbers.txt";
         // when
-        List<String> actual =
-                reader.readFileData(validPath);
+        List<String> actual = reader.readFileData(validPath);
         // then
-        assertEquals(2, actual.size());
+        assertEquals(6, actual.size());
     }
 
     @Test
-    void readFileDataNotExists() throws ArrayTaskException {
+    void readFileDataShouldThrowExceptionForNonExistingFile() {
         // given
-        String validPath = "src/main/resources/data/numbers_not_exists.txt";
+        String validPath = "data/numbers_not_exists.txt";
         // when + then
         assertThrows(ArrayTaskException.class, () -> reader.readFileData(validPath));
     }
