@@ -20,43 +20,47 @@ class ArrayCalculationServiceTest {
     }
 
     @Test
-    void findMin() {
-        Optional<Integer> result = service.findMin(CUSTOM_INTEGER_ARRAY);
-        boolean isPresent = result.isPresent();
-        assertTrue(isPresent);
-        int actual = result.get();
+    void findMinShouldReturnMinimumElement() {
+        // given
         int expected = 1;
-        assertEquals(expected, actual);
+        // when
+        Optional<Integer> result = service.findMin(CUSTOM_INTEGER_ARRAY);
+        // then
+        assertTrue(result.isPresent());
+        assertEquals(expected, result.get());
     }
 
     @Test
-    void findMax() {
-        Optional<Integer> result = service.findMax(CUSTOM_INTEGER_ARRAY);
-        boolean isPresent = result.isPresent();
-        assertTrue(isPresent);
-        int actual = result.get();
+    void findMaxShouldReturnMaximumElement() {
+        // given
         int expected = 5;
-        assertEquals(expected, actual);
+        // when
+        Optional<Integer> result = service.findMax(CUSTOM_INTEGER_ARRAY);
+        // then
+        assertTrue(result.isPresent());
+        assertEquals(expected, result.get());
     }
 
     @Test
-    void calculateSum() {
-        Optional<Integer> result = service.calculateSum(CUSTOM_INTEGER_ARRAY);
-        boolean isPresent = result.isPresent();
-        assertTrue(isPresent);
-        int actual = result.get();
+    void calculateSumShouldReturnSumOfElements() {
+        // given
         int expected = 10;
-        assertEquals(expected, actual);
+        // when
+        Optional<Integer> result = service.calculateSum(CUSTOM_INTEGER_ARRAY);
+        // then
+        assertTrue(result.isPresent());
+        assertEquals(expected, result.get());
     }
 
     @Test
-    void calculateAverage() {
-        Optional<Double> result = service.calculateAverage(CUSTOM_INTEGER_ARRAY);
-        boolean isPresent = result.isPresent();
-        assertTrue(isPresent);
-        double actual = result.get();
+    void calculateAverageShouldReturnAverageValue() {
+        // given
         double expected = 2.5;
-        assertEquals(expected, actual);
+        // when
+        Optional<Double> result = service.calculateAverage(CUSTOM_INTEGER_ARRAY);
+        // then
+        assertTrue(result.isPresent());
+        assertEquals(expected, result.get());
     }
 
     @AfterEach

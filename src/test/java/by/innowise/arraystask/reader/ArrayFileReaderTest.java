@@ -19,11 +19,21 @@ class ArrayFileReaderTest {
 
     @Test
     void readFileData() throws ArrayTaskException {
+        // given
         String validPath = "src/main/resources/data/numbers.txt";
-        List<String> lines = reader.readFileData(validPath);
+        // when
+        List<String> actual =
+                reader.readFileData(validPath);
+        // then
+        assertEquals(2, actual.size());
+    }
 
-        boolean actual = lines.isEmpty();
-        assertFalse(actual);
+    @Test
+    void readFileDataNotExists() throws ArrayTaskException {
+        // given
+        String validPath = "src/main/resources/data/numbers_not_exists.txt";
+        // when + then
+        assertThrows(ArrayTaskException.class, () -> reader.readFileData(validPath));
     }
 
     @AfterEach

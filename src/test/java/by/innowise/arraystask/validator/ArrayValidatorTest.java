@@ -15,50 +15,58 @@ class ArrayValidatorTest {
     }
 
     @Test
-    void isValidRow1() {
-        boolean actual = validator.isValidRow("1 5 2 6 7");
+    void isValidRowShouldReturnTrueForSpaceSeparatedNumbers() {
+        // when
+        boolean actual = validator.isValidRow("1 5 -2 6 7");
+        // then
         assertTrue(actual);
     }
 
     @Test
-    void isValidRow2() {
-        boolean actual = validator.isValidRow("1 - 2 - 3");
+    void isValidRowShouldReturnTrueForSemicolonSeparatedNumbers() {
+        // when
+        boolean actual = validator.isValidRow("10; 2; 8; -7; 3");
+        // then
         assertTrue(actual);
     }
 
     @Test
-    void isValidRow3() {
-        boolean actual = validator.isValidRow("10; 2; 8; 7; 3");
+    void isValidRowShouldReturnTrueForCommaSeparatedNumbers() {
+        // when
+        boolean actual = validator.isValidRow("5, 4, 3, 2, 1");
+        // then
         assertTrue(actual);
     }
 
     @Test
-    void isValidRow4() {
-        boolean actual = validator.isValidRow("-8 678 -3 2");
+    void isValidRowShouldReturnTrueForNumbersWithAppendedSemicolon() {
+        // when
+        boolean actual = validator.isValidRow("-8; 678; -3; 2;");
+        // then
         assertTrue(actual);
     }
 
     @Test
-    void isValidRow5() {
+    void isValidRowShouldReturnTrueForEmptyString() {
+        // when
         boolean actual = validator.isValidRow("");
+        // then
         assertTrue(actual);
     }
 
     @Test
-    void isValidRow6() {
-        boolean actual = validator.isValidRow("6 2d 34..dsw 34 3");
+    void isValidRowShouldReturnFalseForInvalidCharacters() {
+        // when
+        boolean actual = validator.isValidRow("6@ 2d 34..dsw 34 3.");
+        // then
         assertFalse(actual);
     }
 
     @Test
-    void isValidRow7() {
-        boolean actual = validator.isValidRow("11- 2 - 42-");
-        assertFalse(actual);
-    }
-
-    @Test
-    void isValidRow8() {
-        boolean actual = validator.isValidRow("89345 678_");
+    void isValidRowShouldReturnFalseForNullInput() {
+        // when
+        boolean actual = validator.isValidRow(null);
+        // then
         assertFalse(actual);
     }
 

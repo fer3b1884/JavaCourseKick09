@@ -9,11 +9,11 @@ public class ArrayTaskException extends Exception {
         super(message);
     }
 
-    public ArrayTaskException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
     public ArrayTaskException(Throwable cause) {
         super(cause);
+    }
+
+    public ArrayTaskException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

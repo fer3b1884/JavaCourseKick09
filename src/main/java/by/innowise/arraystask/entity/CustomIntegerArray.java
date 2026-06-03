@@ -1,5 +1,7 @@
 package by.innowise.arraystask.entity;
 
+import by.innowise.arraystask.exception.ArrayTaskException;
+
 import java.util.Arrays;
 import java.util.StringJoiner;
 
@@ -10,28 +12,25 @@ public class CustomIntegerArray {
         this.integerArray = new int[0];  // avoid null
     }
 
-    public CustomIntegerArray(int[] array) {
-        if (array == null) {
-            this.integerArray = new int[0];
+    public CustomIntegerArray(int[] inputArray) {
+        if (inputArray == null) {
+            this.integerArray = new int[0];  // if the constructor takes a null value?
         } else {
-            this.integerArray = Arrays.copyOf(array, array.length);
-//            this.integerArray = array;
+            this.integerArray = Arrays.copyOf(inputArray, inputArray.length);
         }
     }
 
     public int[] getArray() {
-//        return integerArray;
         int length = integerArray.length;
         int[] arrayCopy = Arrays.copyOf(integerArray, length);
         return arrayCopy;
     }
 
-    public void setArray(int[] array) {
-        if (array == null) {
+    public void setArray(int[] inputArray) {
+        if (inputArray == null) {
             this.integerArray = new int[0];
         } else {
-            this.integerArray = Arrays.copyOf(array, array.length);
-//            this.integerArray = array;
+            this.integerArray = Arrays.copyOf(inputArray, inputArray.length);
         }
     }
 

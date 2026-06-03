@@ -10,14 +10,14 @@ import java.util.regex.Pattern;
 
 public class ArrayParser {
     private static final String NUMBER_REGEX = "-?\\d+";
-    private static final Pattern PATTERN = Pattern.compile(NUMBER_REGEX);
 
     public int[] parseString(String row) throws ArrayTaskException{
         ArrayValidator validator = new ArrayValidator();
         if(!validator.isValidRow(row)) {
             throw new ArrayTaskException("Provided row fails validation rules: " + row);
         }
-        Matcher matcher = PATTERN.matcher(row);
+        Pattern pattern = Pattern.compile(NUMBER_REGEX);
+        Matcher matcher = pattern.matcher(row);
         List<Integer> list = new ArrayList<>();
         while (matcher.find()) {
             String token = matcher.group();

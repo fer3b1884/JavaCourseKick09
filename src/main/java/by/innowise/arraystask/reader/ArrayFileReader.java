@@ -9,10 +9,10 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class ArrayFileReader {
-    public List<String> readFileData(String filePath) throws ArrayTaskException {
-        Path path = Paths.get(filePath);
+    public List<String> readFileData(String filePathString) throws ArrayTaskException {
+        Path path = Paths.get(filePathString);
         if (!Files.exists(path)) {
-            throw new ArrayTaskException("Target file does not exist: " + filePath);
+            throw new ArrayTaskException("Target file does not exist: " + filePathString);
         }
         try {
             List<String> lines = Files.readAllLines(path);

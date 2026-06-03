@@ -16,31 +16,61 @@ class ArrayParserTest {
     }
 
     @Test
-    void parseString1() throws ArrayTaskException {
-        int[] expected = new int[] {10, 2, 8, 7, 3};
-        int[] actual = parser.parseString("10; 2; 8; 7; 3");
+    void parseStringShouldParseSpaceSeparatedNumbers() throws ArrayTaskException {
+        // given
+        int[] expected = new int[] {1, 5, -2, 6, 7};
+        // when
+        int[] actual = parser.parseString("1 5 -2 6 7");
+        // then
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    void parseString2() throws ArrayTaskException {
+    void parseStringShouldReturnEmptyArrayForEmptyString() throws ArrayTaskException {
+        // given
         int[] expected = new int[]{};
+        // when
         int[] actual = parser.parseString("");
+        // then
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    void parseString3() throws ArrayTaskException {
-        int[] expected = new int[] {1, 2, 3};
-        int[] actual = parser.parseString("1 - 2 - 3");
+    void parseStringShouldParseSemicolonSeparatedNumbers() throws ArrayTaskException {
+        // given
+        int[] expected = new int[] {10, 2, 8, -7, 3};
+        // when
+        int[] actual = parser.parseString("10; 2; 8; -7; 3");
+        // then
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    void parseString4() throws ArrayTaskException {
-        int[] expected = new int[] {-1, 2, -3};
-        int[] actual = parser.parseString("-1 2 -3");
+    void parseStringShouldParseCommaSeparatedNumbers() throws ArrayTaskException {
+        // given
+        int[] expected = new int[] {5, 4, 3, 2, 1};
+        // when
+        int[] actual = parser.parseString("5, 4, 3, 2, 1");
+        // then
         assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void parseStringShouldParseNumbersWithAppendedSemicolon() throws ArrayTaskException {
+        // given
+        int[] expected = new int[] {-8, 678, -3, 2};
+        // when
+        int[] actual = parser.parseString("-8; 678; -3; 2;");
+        // then
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void parseStringShouldThrowExceptionForInvalidData() {
+        // given
+
+        // when + then
+        assertThrows(ArrayTaskException.class, () -> parser.parseString("6@ 2d 34..dsw 34 3."));
     }
 
     @AfterEach

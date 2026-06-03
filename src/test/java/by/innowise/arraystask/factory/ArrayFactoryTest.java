@@ -18,12 +18,19 @@ class ArrayFactoryTest {
     }
 
     @Test
-    void createArray() throws ArrayTaskException {
-        int[] inputElements = new int[] {5, 4, 3, 2, 1};
-        CustomIntegerArray actualEntity = factory.createArray(inputElements);
-        int[] expected = new int[] {5, 4, 3, 2, 1};
-        int[] actual = actualEntity.getArray();
-        assertArrayEquals(expected, actual);
+    void createArrayShouldCreateEntityWithProvidedElements() throws ArrayTaskException {
+        // given
+        int[] expected = {5, 4, 3, 2, 1};
+        // when
+        CustomIntegerArray actual = factory.createArray(expected);
+        // then
+        assertArrayEquals(expected, actual.getArray());
+    }
+
+    @Test
+    void createArrayShouldThrowExceptionForNullArray() {
+        // then
+        assertThrows(ArrayTaskException.class, () -> factory.createArray(null));
     }
 
     @AfterEach
