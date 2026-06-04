@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="LOG_DIR">logs</Property>
+        <Property name="PATTERN_CONSOLE">%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %c - %msg%n</Property>
+        <Property name="PATTERN_FILE">%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %c - %msg%n</Property>
+    </Properties>
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="${PATTERN_CONSOLE}"/>
+        </Console>
+        <File name="FileAppender" fileName="${LOG_DIR}/text.log">
+            <PatternLayout pattern="${PATTERN_FILE}"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="Log_Console">
+            <AppenderRef ref="ConsoleAppender"/>
+        </Logger>
+        <Logger name="Log_File">
+            <AppenderRef ref="FileAppender"/>
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="FileAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>
