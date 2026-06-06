@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.StringJoiner;
 //import java.util.Comparator;
@@ -72,14 +73,20 @@ public class ArrayRepositoryImpl implements ArrayRepository {
     }
 
     @Override
+    public void sort(Comparator<CustomIntegerArray> comparator) throws ArrayTaskException {
+        if (comparator == null) {
+            LOGGER.error("Comparator is null");
+            throw new ArrayTaskException("Comparator cannot be null");
+        }
+        arrays.sort(comparator);
+        Class<?> comparatorClass = comparator.getClass();  // is used for logger output
+        LOGGER.info("Repository sorted using comparator: {}", comparatorClass.getSimpleName());
+    }
+
+    @Override
     public String toString() {
         return new StringJoiner(", ", ArrayRepositoryImpl.class.getSimpleName() + "[", "]")
                 .add("arrays=" + arrays)
                 .toString();
     }
-
-//    @Override
-//    public void sort(Comparator comparator) {
-//
-//    }
 }
