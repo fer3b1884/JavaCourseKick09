@@ -10,7 +10,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ArrayCalculationServiceTest {
+class ArrayCalculationServiceImplTest {
     private static final CustomIntegerArray CUSTOM_INTEGER_ARRAY = new CustomIntegerArray(new int[] { 1, 2, 5, 2 });
     private ArrayCalculationService service;
 

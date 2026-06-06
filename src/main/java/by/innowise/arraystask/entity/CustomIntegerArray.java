@@ -1,11 +1,10 @@
 package by.innowise.arraystask.entity;
 
-import by.innowise.arraystask.exception.ArrayTaskException;
-
 import java.util.Arrays;
 import java.util.StringJoiner;
 
 public class CustomIntegerArray {
+    private long id;
     private int[] integerArray;
 
     public CustomIntegerArray() {
@@ -20,10 +19,22 @@ public class CustomIntegerArray {
         }
     }
 
+    public CustomIntegerArray(long id, int[] inputArray) {
+        this(inputArray);
+        this.id = id;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public int[] getArray() {
         int length = integerArray.length;
-        int[] arrayCopy = Arrays.copyOf(integerArray, length);
-        return arrayCopy;
+        return Arrays.copyOf(integerArray, length);
     }
 
     public void setArray(int[] inputArray) {
@@ -34,23 +45,26 @@ public class CustomIntegerArray {
         }
     }
 
+    public int lengthOfArray() {
+        return integerArray.length;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (o == null || (getClass() != o.getClass())) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         CustomIntegerArray that = (CustomIntegerArray) o;
-
-        return Arrays.equals(integerArray, that.integerArray);
+        return id == that.id && Arrays.equals(integerArray, that.integerArray);
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(integerArray);
+        return 31 * Arrays.hashCode(integerArray) + Long.hashCode(id);
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", CustomIntegerArray.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
                 .add("integerArray=" + Arrays.toString(integerArray))
                 .toString();
     }
