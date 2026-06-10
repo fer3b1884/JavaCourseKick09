@@ -8,78 +8,88 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Comparator;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ArrayComparatorTest {
-    private static final CustomIntegerArray ARRAY_1 = new CustomIntegerArray(3L, new int[]{5, 6, 7});
-    private static final CustomIntegerArray ARRAY_2 = new CustomIntegerArray(1L, new int[]{1});
-    private static final CustomIntegerArray ARRAY_3 = new CustomIntegerArray(2L, new int[]{3, 4});
-    private ArrayRepository repository;
+    private static final int[] ARRAY_1 = new int[]{5, 6, 7};
+    private static final int[] ARRAY_2 = new int[]{1};
+    private static final int[] ARRAY_3 = new int[]{3, 4};
+    private static final ArrayRepository REPOSITORY = ArrayRepositoryImpl.getInstance();
+    private CustomIntegerArray customArray1;
+    private CustomIntegerArray customArray2;
+    private CustomIntegerArray customArray3;
 
     @BeforeEach
     void setUp() throws ArrayTaskException {
-        repository = ArrayRepositoryImpl.getInstance();
-        // cleaning the repository before each test
-        for (CustomIntegerArray array : repository.getAll()) {
-            repository.removeCustomIntegerArray(array);
+        for (CustomIntegerArray array : REPOSITORY.getAll()) {
+            REPOSITORY.removeCustomIntegerArray(array);
         }
+        customArray1 = new CustomIntegerArray(ARRAY_1);
+        customArray2 = new CustomIntegerArray(ARRAY_2);
+        customArray3 = new CustomIntegerArray(ARRAY_3);
     }
 
     @Test
     void sortShouldOrderArraysById() throws ArrayTaskException {
         // given
-        repository.addCustomIntegerArray(ARRAY_1);
-        repository.addCustomIntegerArray(ARRAY_2);
-        repository.addCustomIntegerArray(ARRAY_3);
+        long firstExpectedId = customArray1.getId();
+        long secondExpectedId = customArray2.getId();
+        long thirdExpectedId = customArray3.getId();
+        REPOSITORY.addCustomIntegerArray(customArray1);
+        REPOSITORY.addCustomIntegerArray(customArray2);
+        REPOSITORY.addCustomIntegerArray(customArray3);
         // when
-        repository.sort(new ArrayIdComparator());
-        List<CustomIntegerArray> actual = repository.getAll();
-        CustomIntegerArray firstArray = actual.get(0);
-        CustomIntegerArray secondArray = actual.get(1);
-        CustomIntegerArray thirdArray = actual.get(2);
+        REPOSITORY.sort(new ArrayIdComparator());
         // then
-        assertEquals(1L, firstArray.getId());
-        assertEquals(2L, secondArray.getId());
-        assertEquals(3L, thirdArray.getId());
+        List<CustomIntegerArray> actual = REPOSITORY.getAll();
+        assertAll(
+                () -> assertEquals(firstExpectedId, actual.get(0).getId()),
+                () -> assertEquals(secondExpectedId, actual.get(1).getId()),
+                () -> assertEquals(thirdExpectedId, actual.get(2).getId())
+        );
     }
 
     @Test
     void sortShouldOrderArraysByLength() throws ArrayTaskException {
         // given
-        repository.addCustomIntegerArray(ARRAY_1);
-        repository.addCustomIntegerArray(ARRAY_2);
-        repository.addCustomIntegerArray(ARRAY_3);
+        int firstArrayLength = ARRAY_1.length;
+        int secondArrayLength = ARRAY_2.length;
+        int thirdArrayLength = ARRAY_3.length;
+        REPOSITORY.addCustomIntegerArray(customArray1);
+        REPOSITORY.addCustomIntegerArray(customArray2);
+        REPOSITORY.addCustomIntegerArray(customArray3);
         // when
-        repository.sort(new ArrayLengthComparator());
-        List<CustomIntegerArray> actual = repository.getAll();
-        CustomIntegerArray firstArray = actual.get(0);
-        CustomIntegerArray secondArray = actual.get(1);
-        CustomIntegerArray thirdArray = actual.get(2);
+        REPOSITORY.sort(new ArrayLengthComparator());
         // then
-        assertEquals(1, firstArray.lengthOfArray());
-        assertEquals(2, secondArray.lengthOfArray());
-        assertEquals(3, thirdArray.lengthOfArray());
+        List<CustomIntegerArray> actual = REPOSITORY.getAll();
+        assertAll(
+                () -> assertEquals(secondArrayLength, actual.get(0).length()),
+                () -> assertEquals(thirdArrayLength, actual.get(1).length()),
+                () -> assertEquals(firstArrayLength, actual.get(2).length())
+        );
     }
 
     @Test
     void sortShouldOrderArraysByFirstElement() throws ArrayTaskException {
         // given
-        repository.addCustomIntegerArray(ARRAY_1); // 5
-        repository.addCustomIntegerArray(ARRAY_2); // 1
-        repository.addCustomIntegerArray(ARRAY_3); // 3
+        int firstArrayElement = ARRAY_1[0];
+        int secondArrayElement = ARRAY_2[0];
+        int thirdArrayElement = ARRAY_3[0];
+        REPOSITORY.addCustomIntegerArray(customArray1);
+        REPOSITORY.addCustomIntegerArray(customArray2);
+        REPOSITORY.addCustomIntegerArray(customArray3);
         // when
-        repository.sort(new ArrayFirstElementComparator());
-        List<CustomIntegerArray> actual = repository.getAll();
-        CustomIntegerArray firstArray = actual.get(0);
-        CustomIntegerArray secondArray = actual.get(1);
-        CustomIntegerArray thirdArray = actual.get(2);
+        REPOSITORY.sort(new ArrayFirstElementComparator());
         // then
-        assertEquals(1, firstArray.getArray()[0]);
-        assertEquals(3, secondArray.getArray()[0]);
-        assertEquals(5, thirdArray.getArray()[0]);
+        List<CustomIntegerArray> actual = REPOSITORY.getAll();
+        assertAll(
+                () -> assertEquals(secondArrayElement, actual.get(0).getArray()[0]),
+                () -> assertEquals(thirdArrayElement, actual.get(1).getArray()[0]),
+                () -> assertEquals(firstArrayElement, actual.get(2).getArray()[0])
+        );
     }
 
     @AfterEach

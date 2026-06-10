@@ -9,27 +9,26 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SumEqualsSpecificationTest {
-    private static final CustomIntegerArray SPECIFIED_ARRAY = new CustomIntegerArray(10L, new int[]{1, 2, 3});
-    private static final CustomIntegerArray UNSPECIFIED_ARRAY = new CustomIntegerArray(9L, new int[]{4, 5, 6});
-    private Specification specification;
+    private static final CustomIntegerArray SPECIFIED_ARRAY = new CustomIntegerArray(new int[]{1, 2, 3});
+    private static final CustomIntegerArray UNSPECIFIED_ARRAY = new CustomIntegerArray(new int[]{4, 5, 6});
+    private static final Specification SPECIFICATION = new SumEqualsSpecification(6);
 
     @BeforeEach
     void setUp() {
-        specification = new SumEqualsSpecification(6);
     }
 
     @Test
-    void specifyShouldReturnTrueWhenIdMatches() {
+    void specifyShouldReturnTrueWhenSumMatches() {
         // when
-        boolean actual = specification.specify(SPECIFIED_ARRAY);
+        boolean actual = SPECIFICATION.specify(SPECIFIED_ARRAY);
         // then
         assertTrue(actual);
     }
 
     @Test
-    void specifyShouldReturnFalseWhenIdDoesNotMatch() {
+    void specifyShouldReturnFalseWhenSumDoesNotMatch() {
         // when
-        boolean actual = specification.specify(UNSPECIFIED_ARRAY);
+        boolean actual = SPECIFICATION.specify(UNSPECIFIED_ARRAY);
         // then
         assertFalse(actual);
     }
@@ -37,7 +36,7 @@ class SumEqualsSpecificationTest {
     @Test
     void specifyShouldReturnFalseWhenArrayIsNull() {
         // when
-        boolean actual = specification.specify(null);
+        boolean actual = SPECIFICATION.specify(null);
         // then
         assertFalse(actual);
     }

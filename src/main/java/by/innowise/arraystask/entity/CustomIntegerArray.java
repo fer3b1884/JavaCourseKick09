@@ -1,35 +1,29 @@
 package by.innowise.arraystask.entity;
 
+import by.innowise.arraystask.exception.ArrayTaskException;
+import by.innowise.arraystask.observer.ArrayObserver;
+import by.innowise.arraystask.observer.Observable;
+import by.innowise.arraystask.util.ArrayIdGenerator;
+
 import java.util.Arrays;
 import java.util.StringJoiner;
 
-public class CustomIntegerArray {
-    private long id;
+public class CustomIntegerArray implements Observable {
+    private final long id;
     private int[] integerArray;
+    private ArrayObserver observer;
 
-    public CustomIntegerArray() {
-        this.integerArray = new int[0];  // avoid null
-    }
-
-    public CustomIntegerArray(int[] inputArray) {
+    public CustomIntegerArray(int[] inputArray) /*throws ArrayTaskException*/ {
         if (inputArray == null) {
-            this.integerArray = new int[0];  // if the constructor takes a null value?
-        } else {
-            this.integerArray = Arrays.copyOf(inputArray, inputArray.length);
+//            throw new ArrayTaskException("Input array cannot be null");
+            integerArray = new int[0];
         }
-    }
-
-    public CustomIntegerArray(long id, int[] inputArray) {
-        this(inputArray);
-        this.id = id;
+        this.id = ArrayIdGenerator.nextId();
+        this.integerArray = Arrays.copyOf(inputArray, inputArray.length);
     }
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public int[] getArray() {
@@ -37,16 +31,44 @@ public class CustomIntegerArray {
         return Arrays.copyOf(integerArray, length);
     }
 
-    public void setArray(int[] inputArray) {
-        if (inputArray == null) {
-            this.integerArray = new int[0];
-        } else {
-            this.integerArray = Arrays.copyOf(inputArray, inputArray.length);
+    public void setArray(int[] integerArray) throws ArrayTaskException {
+        if (integerArray == null) {
+            throw new ArrayTaskException("Input array cannot be null");
         }
+        this.integerArray = Arrays.copyOf(integerArray, integerArray.length);
+        notifyObserver();
     }
 
-    public int lengthOfArray() {
+    public int length() {
         return integerArray.length;
+    }
+
+    public void setElement(int index, int value) throws ArrayTaskException {
+        if (index < 0 || index >= integerArray.length) {
+            throw new ArrayTaskException("Index " + index + " is out of bounds.");
+        }
+        integerArray[index] = value;
+        notifyObserver();
+    }
+
+    @Override
+    public void attachObserver(ArrayObserver arrayObserver) throws ArrayTaskException {
+        if (arrayObserver == null) {
+            throw new ArrayTaskException("Observer cannot be null");
+        }
+        observer = arrayObserver;
+    }
+
+    @Override
+    public void detachObserver() {
+        observer = null;
+    }
+
+    @Override
+    public void notifyObserver() {
+        if (observer != null) {
+            observer.update(this);
+        }
     }
 
     @Override

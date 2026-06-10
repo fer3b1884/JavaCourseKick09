@@ -1,8 +1,6 @@
 package by.innowise.arraystask.reader;
 
 import by.innowise.arraystask.exception.ArrayTaskException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,11 +10,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayFileReaderTest {
-    private ArrayFileReader reader;
+    private static final ArrayFileReader READER = new ArrayFileReader();
 
     @BeforeEach
     void setUp() {
-        reader = new ArrayFileReader();
     }
 
     @Test
@@ -24,7 +21,7 @@ class ArrayFileReaderTest {
         // given
         String validPath = "data/numbers.txt";
         // when
-        List<String> actual = reader.readFileData(validPath);
+        List<String> actual = READER.readFileData(validPath);
         // then
         assertEquals(6, actual.size());
     }
@@ -34,7 +31,7 @@ class ArrayFileReaderTest {
         // given
         String validPath = "data/numbers_not_exists.txt";
         // when + then
-        assertThrows(ArrayTaskException.class, () -> reader.readFileData(validPath));
+        assertThrows(ArrayTaskException.class, () -> READER.readFileData(validPath));
     }
 
     @AfterEach

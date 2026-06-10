@@ -14,7 +14,7 @@ public class ArrayCalculationServiceImpl implements ArrayCalculationService {
     public Optional<Integer> findMin(CustomIntegerArray customIntegerArray) {
         LOGGER.info("Searching minimum element");
         if (customIntegerArray == null) {
-            LOGGER.warn("Cannot find minimum element: array is null");
+            LOGGER.warn("Cannot find minimum element: customIntegerArray is null");
             return Optional.empty();
         }
         int[] array = customIntegerArray.getArray();
@@ -36,7 +36,7 @@ public class ArrayCalculationServiceImpl implements ArrayCalculationService {
     public Optional<Integer> findMax(CustomIntegerArray customIntegerArray) {
         LOGGER.info("Searching maximum element");
         if (customIntegerArray == null) {
-            LOGGER.warn("Cannot find maximum element: array is null");
+            LOGGER.warn("Cannot find maximum element: customIntegerArray is null");
             return Optional.empty();
         }
         int[] array = customIntegerArray.getArray();
@@ -58,7 +58,7 @@ public class ArrayCalculationServiceImpl implements ArrayCalculationService {
     public Optional<Integer> calculateSum(CustomIntegerArray customIntegerArray) {
         LOGGER.info("Calculating sum");
         if (customIntegerArray == null) {
-            LOGGER.warn("Cannot calculate sum of element: array is null");
+            LOGGER.warn("Cannot calculate sum of element: customIntegerArray is null");
             return Optional.empty();
         }
         int[] array = customIntegerArray.getArray();
@@ -78,7 +78,7 @@ public class ArrayCalculationServiceImpl implements ArrayCalculationService {
     public Optional<Double> calculateAverage(CustomIntegerArray customIntegerArray) {
         LOGGER.info("Calculating average value");
         if (customIntegerArray == null) {
-            LOGGER.warn("Cannot calculate average of element: array is null");
+            LOGGER.warn("Cannot calculate average of element: customIntegerArray is null");
             return Optional.empty();
         }
         int[] array = customIntegerArray.getArray();

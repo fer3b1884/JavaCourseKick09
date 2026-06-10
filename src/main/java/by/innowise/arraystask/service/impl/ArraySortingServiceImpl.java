@@ -20,6 +20,10 @@ public class ArraySortingServiceImpl implements ArraySortingService {
         }
         int[] elements = customIntegerArray.getArray();
         int length = elements.length;
+        if (length == 0) {
+            LOGGER.warn("Bubble sort failed: array is empty, nothing to sort");
+            return;
+        }
         for (int i = 0; i < length - 1; i++) {
             for (int j = 0; j < length - i - 1; j++) {
                 int current = elements[j];
@@ -43,6 +47,10 @@ public class ArraySortingServiceImpl implements ArraySortingService {
         }
         int[] elements = customIntegerArray.getArray();
         int length = elements.length;
+        if (length == 0) {
+            LOGGER.warn("Insertion sort failed: array is empty, nothing to sort");
+            return;
+        }
         for (int i = 1; i < length; ++i) {
             int key = elements[i];
             int j = i - 1;

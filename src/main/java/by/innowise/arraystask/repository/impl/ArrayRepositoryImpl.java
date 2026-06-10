@@ -2,8 +2,10 @@ package by.innowise.arraystask.repository.impl;
 
 import by.innowise.arraystask.entity.CustomIntegerArray;
 import by.innowise.arraystask.exception.ArrayTaskException;
+import by.innowise.arraystask.observer.impl.CustomArrayObserver;
 import by.innowise.arraystask.repository.ArrayRepository;
 import by.innowise.arraystask.specification.Specification;
+import by.innowise.arraystask.warehouse.Warehouse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.StringJoiner;
-//import java.util.Comparator;
 
 public class ArrayRepositoryImpl implements ArrayRepository {
     private static final Logger LOGGER = LogManager.getLogger(ArrayRepositoryImpl.class);
@@ -36,6 +37,8 @@ public class ArrayRepositoryImpl implements ArrayRepository {
             LOGGER.error("Attempt to add null array");
             throw new ArrayTaskException("CustomIntegerArray cannot be null");
         }
+        customIntegerArray.attachObserver(new CustomArrayObserver());
+        customIntegerArray.notifyObserver();
         arrays.add(customIntegerArray);
         LOGGER.info("Array with id {} added to repository", customIntegerArray.getId());
     }
@@ -46,6 +49,9 @@ public class ArrayRepositoryImpl implements ArrayRepository {
             LOGGER.error("Attempt to remove null array");
             throw new ArrayTaskException("CustomIntegerArray cannot be null");
         }
+        customIntegerArray.detachObserver();
+        Warehouse warehouse = Warehouse.getInstance();
+        warehouse.remove(customIntegerArray.getId());
         arrays.remove(customIntegerArray);
         LOGGER.info("Array with id {} removed from repository", customIntegerArray.getId());
     }

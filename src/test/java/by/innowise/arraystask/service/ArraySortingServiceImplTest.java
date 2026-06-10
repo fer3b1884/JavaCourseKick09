@@ -12,11 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArraySortingServiceImplTest {
     private static final int[] UNSORTED_ARRAY = {1, 9, 5, 8, 4, 6, 2, 7, 3};
     private static final int[] SORTED_ARRAY = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    ArraySortingService service;
+    private static final int[] EMPTY_ARRAY = {};
+    private static final ArraySortingService SERVICE = new ArraySortingServiceImpl();;
 
     @BeforeEach
     void setUp() {
-        service = new ArraySortingServiceImpl();
     }
 
     @Test
@@ -24,7 +24,7 @@ class ArraySortingServiceImplTest {
         // given
         CustomIntegerArray array = new CustomIntegerArray(UNSORTED_ARRAY);
         // when
-        service.bubbleSort(array);
+        SERVICE.bubbleSort(array);
         // then
         assertArrayEquals(SORTED_ARRAY, array.getArray());
     }
@@ -34,7 +34,7 @@ class ArraySortingServiceImplTest {
         // given
         CustomIntegerArray array = new CustomIntegerArray(UNSORTED_ARRAY);
         // when
-        service.insertionSort(array);
+        SERVICE.insertionSort(array);
         // then
         assertArrayEquals(SORTED_ARRAY, array.getArray());
     }
@@ -42,13 +42,33 @@ class ArraySortingServiceImplTest {
     @Test
     void bubbleSortShouldThrowExceptionForNullArray()  {
         // when + then
-        assertThrows(ArrayTaskException.class, () -> service.bubbleSort(null));
+        assertThrows(ArrayTaskException.class, () -> SERVICE.bubbleSort(null));
     }
 
     @Test
     void insertionSortShouldThrowExceptionForNullArray()  {
         // when + then
-        assertThrows(ArrayTaskException.class, () -> service.insertionSort(null));
+        assertThrows(ArrayTaskException.class, () -> SERVICE.insertionSort(null));
+    }
+
+    @Test
+    void bubbleSortShouldNotFailForEmptyArray() throws Exception {
+        // given
+        CustomIntegerArray array = new CustomIntegerArray(EMPTY_ARRAY);
+        // when
+        SERVICE.bubbleSort(array);
+        // then
+        assertArrayEquals(EMPTY_ARRAY, array.getArray());
+    }
+
+    @Test
+    void insertionSortShouldNotFailForEmptyArray() throws Exception {
+        // given
+        CustomIntegerArray array = new CustomIntegerArray(EMPTY_ARRAY);
+        // when
+        SERVICE.insertionSort(array);
+        // then
+        assertArrayEquals(EMPTY_ARRAY, array.getArray());
     }
 
     @AfterEach

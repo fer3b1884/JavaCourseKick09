@@ -14,18 +14,20 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayRepositoryImplTest {
-    private static final CustomIntegerArray ARRAY_1 = new CustomIntegerArray(1L, new int[]{1, 2, 3});
-    private static final CustomIntegerArray ARRAY_2 = new CustomIntegerArray(2L, new int[]{10, 20, 30});
-    private static final CustomIntegerArray ARRAY_3 = new CustomIntegerArray(2L, new int[]{4, 5, 6});
-    private ArrayRepository repository;
+    private static final int[] ARRAY_1 = new int[]{1, 2, 3};
+    private static final int[] ARRAY_2 = new int[]{10, 20, 30};
+    private static final ArrayRepository REPOSITORY = ArrayRepositoryImpl.getInstance();;
+    private CustomIntegerArray customArray1;
+    private CustomIntegerArray customArray2;
 
     @BeforeEach
     void setUp() throws ArrayTaskException {
-        repository = ArrayRepositoryImpl.getInstance();
         // cleaning the repository before each test
-        for (CustomIntegerArray array : repository.getAll()) {
-            repository.removeCustomIntegerArray(array);
+        for (CustomIntegerArray array : REPOSITORY.getAll()) {
+            REPOSITORY.removeCustomIntegerArray(array);
         }
+        customArray1 = new CustomIntegerArray(ARRAY_1);
+        customArray2 = new CustomIntegerArray(ARRAY_2);
     }
 
     @Test
@@ -33,104 +35,110 @@ class ArrayRepositoryImplTest {
         // when
         ArrayRepository anotherRepository = ArrayRepositoryImpl.getInstance();
         // then
-        assertSame(repository, anotherRepository);
+        assertSame(REPOSITORY, anotherRepository);
     }
 
     @Test
     void addCustomIntegerArrayShouldAddArray() throws ArrayTaskException {
+        // given
+        int expectedSize = 1;
         // when
-        repository.addCustomIntegerArray(ARRAY_1);
-        List<CustomIntegerArray> actual = repository.getAll();
+        REPOSITORY.addCustomIntegerArray(customArray1);
+        List<CustomIntegerArray> actual = REPOSITORY.getAll();
         // then
-        assertEquals(1, actual.size());
+        assertEquals(expectedSize, actual.size());
     }
 
     @Test
     void addCustomIntegerArrayShouldThrowExceptionWhenArrayIsNull() {
         // when + then
-        assertThrows(ArrayTaskException.class, () -> repository.addCustomIntegerArray(null));
+        assertThrows(ArrayTaskException.class, () -> REPOSITORY.addCustomIntegerArray(null));
     }
 
     @Test
     void removeCustomIntegerArrayShouldRemoveArray() throws ArrayTaskException {
         // given
-        repository.addCustomIntegerArray(ARRAY_1);
+        REPOSITORY.addCustomIntegerArray(customArray1);
         // when
-        repository.removeCustomIntegerArray(ARRAY_1);
-        List<CustomIntegerArray> actual = repository.getAll();
+        REPOSITORY.removeCustomIntegerArray(customArray1);
         // then
+        List<CustomIntegerArray> actual = REPOSITORY.getAll();
         assertTrue(actual.isEmpty());
     }
 
     @Test
     void removeCustomIntegerArrayShouldThrowExceptionWhenArrayIsNull(){
         // when + then
-        assertThrows(ArrayTaskException.class, () -> repository.removeCustomIntegerArray(null));
+        assertThrows(ArrayTaskException.class, () -> REPOSITORY.removeCustomIntegerArray(null));
     }
 
     @Test
     void queryShouldReturnArrayWithMatchingId() throws ArrayTaskException {
         // given
-        repository.addCustomIntegerArray(ARRAY_1);
-        repository.addCustomIntegerArray(ARRAY_2);
-        Specification specification = new IdSpecification(1L);
+        int expectedSize = 1;
+        REPOSITORY.addCustomIntegerArray(customArray1);
+        REPOSITORY.addCustomIntegerArray(customArray2);
+        long targetId = customArray1.getId();
+        Specification specification = new IdSpecification(targetId);
         // when
-        List<CustomIntegerArray> actual = repository.query(specification);
-        CustomIntegerArray foundArray = actual.getFirst();
+        List<CustomIntegerArray> actual = REPOSITORY.query(specification);
         // then
-        assertEquals(1, actual.size());
-        assertEquals(1L, foundArray.getId());
+        assertAll(
+                () -> assertEquals(expectedSize, actual.size()),
+                () -> assertEquals(targetId, actual.getFirst().getId())
+        );
     }
 
     @Test
     void queryShouldReturnArraysWithMatchingId() throws ArrayTaskException {
         // given
-        repository.addCustomIntegerArray(ARRAY_1);
-        repository.addCustomIntegerArray(ARRAY_2);
-        repository.addCustomIntegerArray(ARRAY_3);
-        Specification specification = new IdSpecification(2L);
+        int expectedSize = 1;
+        REPOSITORY.addCustomIntegerArray(customArray1);
+        REPOSITORY.addCustomIntegerArray(customArray2);
+        long targetId = customArray1.getId();
+        Specification specification = new IdSpecification(targetId);
         // when
-        List<CustomIntegerArray> actual = repository.query(specification);
-        CustomIntegerArray firstArray = actual.getFirst();
-        CustomIntegerArray secondArray = actual.getFirst();
+        List<CustomIntegerArray> actual = REPOSITORY.query(specification);
         // then
-        assertEquals(2, actual.size());
-        assertEquals(2L, firstArray.getId());
-        assertEquals(2L, secondArray.getId());
+        assertAll(
+                () -> assertEquals(expectedSize, actual.size()),
+                () -> assertEquals(targetId, actual.getFirst().getId())
+        );
     }
 
     @Test
-    void queryShouldReturnEmptyList() throws ArrayTaskException {
+    void queryShouldReturnEmptyListWhenIdDoesNotMatch() throws ArrayTaskException {
         // given
-        repository.addCustomIntegerArray(ARRAY_1);
-        repository.addCustomIntegerArray(ARRAY_2);
-        repository.addCustomIntegerArray(ARRAY_3);
-        Specification specification = new IdSpecification(4L);
+        REPOSITORY.addCustomIntegerArray(customArray1);
+        REPOSITORY.addCustomIntegerArray(customArray2);
+        long nonexistentId = 100;
+        Specification specification = new IdSpecification(nonexistentId);
         // when
-        List<CustomIntegerArray> actual = repository.query(specification);
+        List<CustomIntegerArray> actual = REPOSITORY.query(specification);
         // then
-        assertEquals(0, actual.size());
+        assertTrue(actual.isEmpty());
     }
 
     @Test
     void queryShouldThrowExceptionWhenSpecificationIsNull() {
         // when + then
-        assertThrows(ArrayTaskException.class, () -> repository.query(null));
+        assertThrows(ArrayTaskException.class, () -> REPOSITORY.query(null));
     }
 
     @Test
-    void getAll() throws ArrayTaskException {
+    void getAllShouldReturnAllStoredArrays() throws ArrayTaskException {
         // given
-        repository.addCustomIntegerArray(ARRAY_1);
-        repository.addCustomIntegerArray(ARRAY_2);
+        int expectedSize = 2;
+        REPOSITORY.addCustomIntegerArray(customArray1);
+        REPOSITORY.addCustomIntegerArray(customArray2);
         // when
-        List<CustomIntegerArray> actual = repository.getAll();
-        CustomIntegerArray firstArray = actual.getFirst();
-        CustomIntegerArray secondArray = actual.getLast();
+        List<CustomIntegerArray> actual = REPOSITORY.getAll();
         // then
-        assertEquals(2, actual.size());
-        assertEquals(1L, firstArray.getId());
-        assertEquals(2L, secondArray.getId());
+        assertAll(
+                () -> assertEquals(expectedSize, actual.size()),
+                () -> assertEquals(customArray1, actual.getFirst()),
+                () -> assertEquals(customArray2, actual.getLast())
+        );
     }
 
     @AfterEach

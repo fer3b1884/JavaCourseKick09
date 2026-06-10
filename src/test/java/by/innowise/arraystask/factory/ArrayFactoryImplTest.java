@@ -10,11 +10,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayFactoryImplTest {
-    private ArrayFactory factory;
+    private static final ArrayFactory FACTORY = new ArrayFactoryImpl();
 
     @BeforeEach
     void setUp() {
-        factory = new ArrayFactoryImpl();
     }
 
     @Test
@@ -22,7 +21,7 @@ class ArrayFactoryImplTest {
         // given
         int[] expected = {5, 4, 3, 2, 1};
         // when
-        CustomIntegerArray actual = factory.createArray(expected);
+        CustomIntegerArray actual = FACTORY.createArray(expected);
         // then
         assertArrayEquals(expected, actual.getArray());
     }
@@ -30,7 +29,7 @@ class ArrayFactoryImplTest {
     @Test
     void createArrayShouldThrowExceptionForNullArray() {
         // then
-        assertThrows(ArrayTaskException.class, () -> factory.createArray(null));
+        assertThrows(ArrayTaskException.class, () -> FACTORY.createArray(null));
     }
 
     @AfterEach
