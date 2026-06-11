@@ -9,12 +9,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ArrayFactoryTest {
-    private ArrayFactory factory;
+class ArrayFactoryImplTest {
+    private static final ArrayFactory factory = new ArrayFactoryImpl();
 
     @BeforeEach
     void setUp() {
-        factory = new ArrayFactoryImpl();
     }
 
     @Test

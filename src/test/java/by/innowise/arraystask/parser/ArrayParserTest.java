@@ -8,11 +8,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayParserTest {
-    private ArrayParser parser;
+    private static final ArrayParser parser = new ArrayParser();
 
     @BeforeEach
     void setUp() {
-        parser = new ArrayParser();
     }
 
     @Test

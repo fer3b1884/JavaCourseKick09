@@ -7,11 +7,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayValidatorTest {
-    private ArrayValidator validator;
+    private final static ArrayValidator validator = new ArrayValidator();;
 
     @BeforeEach
     void setUp() {
-        validator = new ArrayValidator();
     }
 
     @Test
