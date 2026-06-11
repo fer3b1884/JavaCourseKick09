@@ -12,8 +12,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayCalculationServiceImplTest {
-    private static final int[] ARRAY_VALUES = new int[] { 1, 2, 5, 2 };
-    private static final ArrayCalculationService SERVICE = new ArrayCalculationServiceImpl();
+    private static final int[] arrayValues = new int[] { 1, 2, 5, 2 };
+    private static final ArrayCalculationService service = new ArrayCalculationServiceImpl();
 
     @BeforeEach
     void setUp() {
@@ -22,10 +22,10 @@ class ArrayCalculationServiceImplTest {
     @Test
     void findMinShouldReturnMinimumElement() throws ArrayTaskException {
         // given
-        CustomIntegerArray customIntegerArray = new CustomIntegerArray(ARRAY_VALUES);
+        CustomIntegerArray customIntegerArray = new CustomIntegerArray(arrayValues);
         int expected = 1;
         // when
-        Optional<Integer> result = SERVICE.findMin(customIntegerArray);
+        Optional<Integer> result = service.findMin(customIntegerArray);
         // then
         assertAll(
                 () -> assertTrue(result.isPresent()),
@@ -36,10 +36,10 @@ class ArrayCalculationServiceImplTest {
     @Test
     void findMaxShouldReturnMaximumElement() throws ArrayTaskException {
         // given
-        CustomIntegerArray customIntegerArray = new CustomIntegerArray(ARRAY_VALUES);
+        CustomIntegerArray customIntegerArray = new CustomIntegerArray(arrayValues);
         int expected = 5;
         // when
-        Optional<Integer> result = SERVICE.findMax(customIntegerArray);
+        Optional<Integer> result = service.findMax(customIntegerArray);
         // then
         assertAll(
                 () -> assertTrue(result.isPresent()),
@@ -50,10 +50,10 @@ class ArrayCalculationServiceImplTest {
     @Test
     void calculateSumShouldReturnSumOfElements() throws ArrayTaskException {
         // given
-        CustomIntegerArray customIntegerArray = new CustomIntegerArray(ARRAY_VALUES);
+        CustomIntegerArray customIntegerArray = new CustomIntegerArray(arrayValues);
         int expected = 10;
         // when
-        Optional<Integer> result = SERVICE.calculateSum(customIntegerArray);
+        Optional<Integer> result = service.calculateSum(customIntegerArray);
         // then
         assertAll(
                 () -> assertTrue(result.isPresent()),
@@ -64,10 +64,10 @@ class ArrayCalculationServiceImplTest {
     @Test
     void calculateAverageShouldReturnAverageValue() throws ArrayTaskException {
         // given
-        CustomIntegerArray customIntegerArray = new CustomIntegerArray(ARRAY_VALUES);
+        CustomIntegerArray customIntegerArray = new CustomIntegerArray(arrayValues);
         double expected = 2.5;
         // when
-        Optional<Double> result = SERVICE.calculateAverage(customIntegerArray);
+        Optional<Double> result = service.calculateAverage(customIntegerArray);
         // then
         assertAll(
                 () -> assertTrue(result.isPresent()),

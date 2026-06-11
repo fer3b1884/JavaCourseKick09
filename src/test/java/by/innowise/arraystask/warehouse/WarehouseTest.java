@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class WarehouseTest {
-    private static final Warehouse WAREHOUSE = Warehouse.getInstance();
+    private static final Warehouse warehouse = Warehouse.getInstance();
 
     @BeforeEach
     void setUp() {
-        WAREHOUSE.clear();
+        warehouse.clear();
     }
 
     @Test
@@ -21,9 +21,9 @@ class WarehouseTest {
         long id = 1L;
         ArrayParameters expected = new ArrayParameters(1, 10, 20, 5.0);
         // when
-        WAREHOUSE.put(id, expected);
+        warehouse.put(id, expected);
         // then
-        assertEquals(expected, WAREHOUSE.get(id));
+        assertEquals(expected, warehouse.get(id));
     }
 
     @Test
@@ -31,7 +31,7 @@ class WarehouseTest {
         // given
         long id = 999L;
         // when
-        ArrayParameters actual = WAREHOUSE.get(id);
+        ArrayParameters actual = warehouse.get(id);
         // then
         assertNull(actual);
     }
@@ -41,11 +41,11 @@ class WarehouseTest {
         // given
         long id = 1L;
         ArrayParameters parameters = new ArrayParameters(1, 10, 20, 5.0);
-        WAREHOUSE.put(id, parameters);
+        warehouse.put(id, parameters);
         // when
-        WAREHOUSE.remove(id);
+        warehouse.remove(id);
         // then
-        assertNull(WAREHOUSE.get(id));
+        assertNull(warehouse.get(id));
     }
 
     @Test
@@ -54,11 +54,11 @@ class WarehouseTest {
         long id = 1L;
         ArrayParameters oldParameters = new ArrayParameters(1, 10, 20, 5.0);
         ArrayParameters newParameters = new ArrayParameters(2, 20, 40, 10.0);
-        WAREHOUSE.put(id, oldParameters);
+        warehouse.put(id, oldParameters);
         // when
-        WAREHOUSE.put(id, newParameters);
+        warehouse.put(id, newParameters);
         // then
-        assertEquals(newParameters, WAREHOUSE.get(id));
+        assertEquals(newParameters, warehouse.get(id));
     }
 
     @AfterEach

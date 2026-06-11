@@ -11,12 +11,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CustomArrayObserverTest {
-    private static final CustomArrayObserver OBSERVER = new CustomArrayObserver();
-    private static final Warehouse WAREHOUSE = Warehouse.getInstance();
+    private static final CustomArrayObserver observer = new CustomArrayObserver();
+    private static final Warehouse warehouse = Warehouse.getInstance();
 
     @BeforeEach
     void setUp() {
-        WAREHOUSE.clear();
+        warehouse.clear();
     }
 
     @Test
@@ -24,9 +24,9 @@ class CustomArrayObserverTest {
         // given
         CustomIntegerArray array = new CustomIntegerArray(new int[]{1, 2, 3});
         // when
-        OBSERVER.update(array);
+        observer.update(array);
         // then
-        ArrayParameters actual = WAREHOUSE.get(array.getId());
+        ArrayParameters actual = warehouse.get(array.getId());
         assertAll(
                 () -> assertNotNull(actual),
                 () -> assertEquals(1, actual.getMin()),
@@ -40,12 +40,12 @@ class CustomArrayObserverTest {
     void updateShouldReplaceOldParameters() throws ArrayTaskException {
         // given
         CustomIntegerArray array = new CustomIntegerArray(new int[]{1, 2, 3});
-        OBSERVER.update(array);
+        observer.update(array);
         array.setArray(new int[]{10, 20});
         // when
-        OBSERVER.update(array);
+        observer.update(array);
         // then
-        ArrayParameters actual = WAREHOUSE.get(array.getId());
+        ArrayParameters actual = warehouse.get(array.getId());
         assertAll(
                 () -> assertNotNull(actual),
                 () -> assertEquals(10, actual.getMin()),

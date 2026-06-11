@@ -11,21 +11,21 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class ArrayFileReader {
-    private static final Logger LOGGER = LogManager.getLogger(ArrayFileReader.class);
+    private static final Logger logger = LogManager.getLogger(ArrayFileReader.class);
 
     public List<String> readFileData(String filePathString) throws ArrayTaskException {
-        LOGGER.info("Reading file {}", filePathString);
+        logger.info("Reading file {}", filePathString);
         Path path = Paths.get(filePathString);
         if (!Files.exists(path)) {
-            LOGGER.error("File does not exist: {}", filePathString);
+            logger.error("File does not exist: {}", filePathString);
             throw new ArrayTaskException("Target file does not exist: " + filePathString);
         }
         try {
             List<String> lines = Files.readAllLines(path);
-            LOGGER.info("Successfully read {} lines from file {}", lines.size(), filePathString);
+            logger.info("Successfully read {} lines from file {}", lines.size(), filePathString);
             return lines;
         } catch (IOException e) {
-            LOGGER.error("Error during reading file {}", filePathString, e);
+            logger.error("Error during reading file {}", filePathString, e);
             throw new ArrayTaskException("Error during reading file process", e);
         }
     }

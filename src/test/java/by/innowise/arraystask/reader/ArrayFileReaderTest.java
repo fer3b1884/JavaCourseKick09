@@ -10,7 +10,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayFileReaderTest {
-    private static final ArrayFileReader READER = new ArrayFileReader();
+    private static final String VALID_PATH = "data/numbers.txt";
+    private static final String INVALID_PATH = "data/numbers_not_exists.txt";
+    private static final ArrayFileReader reader = new ArrayFileReader();
 
     @BeforeEach
     void setUp() {
@@ -19,19 +21,17 @@ class ArrayFileReaderTest {
     @Test
     void readFileDataShouldReturnAllLinesFromExistingFile() throws ArrayTaskException {
         // given
-        String validPath = "data/numbers.txt";
+        int expectedSize = 6;
         // when
-        List<String> actual = READER.readFileData(validPath);
+        List<String> actual = reader.readFileData(VALID_PATH);
         // then
-        assertEquals(6, actual.size());
+        assertEquals(expectedSize, actual.size());
     }
 
     @Test
     void readFileDataShouldThrowExceptionForNonExistingFile() {
-        // given
-        String validPath = "data/numbers_not_exists.txt";
         // when + then
-        assertThrows(ArrayTaskException.class, () -> READER.readFileData(validPath));
+        assertThrows(ArrayTaskException.class, () -> reader.readFileData(INVALID_PATH));
     }
 
     @AfterEach

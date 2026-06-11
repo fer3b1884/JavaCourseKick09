@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Warehouse {
-    private static final Logger LOGGER = LogManager.getLogger(Warehouse.class);
+    private static final Logger logger = LogManager.getLogger(Warehouse.class);
     private static Warehouse instance;
     private final Map<Long, ArrayParameters> storage = new HashMap<>();
 
@@ -23,17 +23,17 @@ public class Warehouse {
     }
 
     public ArrayParameters put(long id, ArrayParameters parameters) {
-        LOGGER.info("Saving parameters for array id={}", id);
+        logger.info("Saving parameters for array id={}", id);
         return storage.put(id, parameters);
     }
 
     public ArrayParameters get(long id) {
-        LOGGER.debug("Getting parameters for array id={}", id);
+        logger.debug("Getting parameters for array id={}", id);
         return storage.get(id);
     }
 
     public ArrayParameters remove(long id) {
-        LOGGER.info("Removing parameters for array id={}", id);
+        logger.info("Removing parameters for array id={}", id);
         return storage.remove(id);
     }
 

@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class IdSpecificationTest {
-    private static final CustomIntegerArray SPECIFIED_ARRAY = new CustomIntegerArray(new int[]{1, 2, 3});
-    private static final CustomIntegerArray UNSPECIFIED_ARRAY = new CustomIntegerArray(new int[]{4, 5, 6});
-    private static final Specification SPECIFICATION = new IdSpecification(SPECIFIED_ARRAY.getId());
+    private static final CustomIntegerArray specifiedArray = new CustomIntegerArray(new int[]{1, 2, 3});
+    private static final CustomIntegerArray unspecifiedArray = new CustomIntegerArray(new int[]{4, 5, 6});
+    private static final Specification specification = new IdSpecification(specifiedArray.getId());
 
     @BeforeEach
     void setUp() {
@@ -20,7 +20,7 @@ class IdSpecificationTest {
     @Test
     void specifyShouldReturnTrueWhenIdMatches() {
         // when
-        boolean actual = SPECIFICATION.specify(SPECIFIED_ARRAY);
+        boolean actual = specification.specify(specifiedArray);
         // then
         assertTrue(actual);
     }
@@ -28,7 +28,7 @@ class IdSpecificationTest {
     @Test
     void specifyShouldReturnFalseWhenIdDoesNotMatch() {
         // when
-        boolean actual = SPECIFICATION.specify(UNSPECIFIED_ARRAY);
+        boolean actual = specification.specify(unspecifiedArray);
         // then
         assertFalse(actual);
     }
@@ -36,7 +36,7 @@ class IdSpecificationTest {
     @Test
     void specifyShouldReturnFalseWhenArrayIsNull() {
         // when
-        boolean actual = SPECIFICATION.specify(null);
+        boolean actual = specification.specify(null);
         // then
         assertFalse(actual);
     }

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.StringJoiner;
 
 public class ArrayRepositoryImpl implements ArrayRepository {
-    private static final Logger LOGGER = LogManager.getLogger(ArrayRepositoryImpl.class);
+    private static final Logger logger = LogManager.getLogger(ArrayRepositoryImpl.class);
     private static ArrayRepositoryImpl instance;
     private final List<CustomIntegerArray> arrays;
 
@@ -26,7 +26,7 @@ public class ArrayRepositoryImpl implements ArrayRepository {
     public static ArrayRepositoryImpl getInstance() {  // singleton alternative constructor
         if (instance == null) {
             instance = new ArrayRepositoryImpl();
-            LOGGER.info("Repository instance created");
+            logger.info("Repository instance created");
         }
         return instance;
     }
@@ -34,26 +34,26 @@ public class ArrayRepositoryImpl implements ArrayRepository {
     @Override
     public void addCustomIntegerArray(CustomIntegerArray customIntegerArray) throws ArrayTaskException {
         if (customIntegerArray == null) {
-            LOGGER.error("Attempt to add null array");
+            logger.error("Attempt to add null array");
             throw new ArrayTaskException("CustomIntegerArray cannot be null");
         }
         customIntegerArray.attachObserver(new CustomArrayObserver());
         customIntegerArray.notifyObserver();
         arrays.add(customIntegerArray);
-        LOGGER.info("Array with id {} added to repository", customIntegerArray.getId());
+        logger.info("Array with id {} added to repository", customIntegerArray.getId());
     }
 
     @Override
     public void removeCustomIntegerArray(CustomIntegerArray customIntegerArray) throws ArrayTaskException {
         if (customIntegerArray == null) {
-            LOGGER.error("Attempt to remove null array");
+            logger.error("Attempt to remove null array");
             throw new ArrayTaskException("CustomIntegerArray cannot be null");
         }
         customIntegerArray.detachObserver();
         Warehouse warehouse = Warehouse.getInstance();
         warehouse.remove(customIntegerArray.getId());
         arrays.remove(customIntegerArray);
-        LOGGER.info("Array with id {} removed from repository", customIntegerArray.getId());
+        logger.info("Array with id {} removed from repository", customIntegerArray.getId());
     }
 
     @Override
@@ -64,29 +64,29 @@ public class ArrayRepositoryImpl implements ArrayRepository {
     @Override
     public List<CustomIntegerArray> query(Specification specification) throws ArrayTaskException {
         if (specification == null) {
-            LOGGER.error("Specification is null");
+            logger.error("Specification is null");
             throw new ArrayTaskException("Specification cannot be null");
         }
-        LOGGER.info("Executing specification: {}", specification);
+        logger.info("Executing specification: {}", specification);
         List<CustomIntegerArray> result = new ArrayList<>();
         for (CustomIntegerArray array : arrays) {
             if (specification.specify(array)) {
                 result.add(array);
             }
         }
-        LOGGER.info("Query completed. Found {} arrays", result.size());
+        logger.info("Query completed. Found {} arrays", result.size());
         return result;
     }
 
     @Override
     public void sort(Comparator<CustomIntegerArray> comparator) throws ArrayTaskException {
         if (comparator == null) {
-            LOGGER.error("Comparator is null");
+            logger.error("Comparator is null");
             throw new ArrayTaskException("Comparator cannot be null");
         }
         arrays.sort(comparator);
         Class<?> comparatorClass = comparator.getClass();  // is used for logger output
-        LOGGER.info("Repository sorted using comparator: {}", comparatorClass.getSimpleName());
+        logger.info("Repository sorted using comparator: {}", comparatorClass.getSimpleName());
     }
 
     @Override

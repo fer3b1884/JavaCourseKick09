@@ -12,11 +12,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.Optional;
 
 public class CustomArrayObserver implements ArrayObserver {
-    private static final Logger LOGGER = LogManager.getLogger(CustomArrayObserver.class);
+    private static final Logger logger = LogManager.getLogger(CustomArrayObserver.class);
 
     @Override
     public void update(CustomIntegerArray array) {
-        LOGGER.info("Array id={} changed. Recalculating parameters", array.getId());
+        logger.info("Array id={} changed. Recalculating parameters", array.getId());
         ArrayCalculationService service = new ArrayCalculationServiceImpl();
         Optional<Integer> minOptional = service.findMin(array);
         Optional<Integer> maxOptional = service.findMax(array);
@@ -30,6 +30,6 @@ public class CustomArrayObserver implements ArrayObserver {
         Warehouse warehouse = Warehouse.getInstance();
         long arrayId = array.getId();
         warehouse.put(arrayId, parameters);  // replace old one
-        LOGGER.info("Warehouse updated for array id={}", array.getId());
+        logger.info("Warehouse updated for array id={}", array.getId());
     }
 }

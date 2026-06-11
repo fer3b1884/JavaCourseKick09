@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SumLessThanSpecificationTest {
-    private static final CustomIntegerArray SPECIFIED_ARRAY = new CustomIntegerArray(new int[]{1, 2, 3});
-    private static final CustomIntegerArray UNSPECIFIED_ARRAY = new CustomIntegerArray(new int[]{4, 5, 6});
-    private static final Specification SPECIFICATION = new SumLessThanSpecification(10);
+    private static final CustomIntegerArray specifiedArray = new CustomIntegerArray(new int[]{1, 2, 3});
+    private static final CustomIntegerArray unspecifiedArray = new CustomIntegerArray(new int[]{4, 5, 6});
+    private static final Specification specification = new SumLessThanSpecification(10);
 
     @BeforeEach
     void setUp() {
@@ -20,7 +20,7 @@ class SumLessThanSpecificationTest {
     @Test
     void specifyShouldReturnTrueWhenSumLessThanValue() {
         // when
-        boolean actual = SPECIFICATION.specify(SPECIFIED_ARRAY);
+        boolean actual = specification.specify(specifiedArray);
         // then
         assertTrue(actual);
     }
@@ -28,7 +28,7 @@ class SumLessThanSpecificationTest {
     @Test
     void specifyShouldReturnFalseWhenSumGreaterThanValue() {
         // when
-        boolean actual = SPECIFICATION.specify(UNSPECIFIED_ARRAY);
+        boolean actual = specification.specify(unspecifiedArray);
         // then
         assertFalse(actual);
     }
@@ -36,7 +36,7 @@ class SumLessThanSpecificationTest {
     @Test
     void specifyShouldReturnFalseWhenArrayIsNull() {
         // when
-        boolean actual = SPECIFICATION.specify(null);
+        boolean actual = specification.specify(null);
         // then
         assertFalse(actual);
     }
