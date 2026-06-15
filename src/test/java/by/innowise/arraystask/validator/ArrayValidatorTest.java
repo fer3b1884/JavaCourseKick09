@@ -3,68 +3,42 @@ package by.innowise.arraystask.validator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.*;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayValidatorTest {
-    private final static ArrayValidator validator = new ArrayValidator();;
+    private static final ArrayValidator validator = new ArrayValidator();
 
     @BeforeEach
     void setUp() {
     }
 
-    @Test
-    void isValidRowShouldReturnTrueForSpaceSeparatedNumbers() {
+    @ParameterizedTest
+    @EmptySource
+    @ValueSource(strings = {
+            "1 5 -2 6 7",
+            "10; 2; 8; -7; 3",
+            "5, 4, 3, 2, 1",
+            "-8; 678; -3; 2;"
+    })
+    void isValidRowShouldReturnTrueForValidRows(String row) {
         // when
-        boolean actual = validator.isValidRow("1 5 -2 6 7");
+        boolean actual = validator.isValidRow(row);
         // then
         assertTrue(actual);
     }
 
-    @Test
-    void isValidRowShouldReturnTrueForSemicolonSeparatedNumbers() {
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {
+            "6@ 2d 34..dsw 34 3."
+    })
+    void isValidRowShouldReturnFalseForInvalidRows(String row) {
         // when
-        boolean actual = validator.isValidRow("10; 2; 8; -7; 3");
-        // then
-        assertTrue(actual);
-    }
-
-    @Test
-    void isValidRowShouldReturnTrueForCommaSeparatedNumbers() {
-        // when
-        boolean actual = validator.isValidRow("5, 4, 3, 2, 1");
-        // then
-        assertTrue(actual);
-    }
-
-    @Test
-    void isValidRowShouldReturnTrueForNumbersWithAppendedSemicolon() {
-        // when
-        boolean actual = validator.isValidRow("-8; 678; -3; 2;");
-        // then
-        assertTrue(actual);
-    }
-
-    @Test
-    void isValidRowShouldReturnTrueForEmptyString() {
-        // when
-        boolean actual = validator.isValidRow("");
-        // then
-        assertTrue(actual);
-    }
-
-    @Test
-    void isValidRowShouldReturnFalseForInvalidCharacters() {
-        // when
-        boolean actual = validator.isValidRow("6@ 2d 34..dsw 34 3.");
-        // then
-        assertFalse(actual);
-    }
-
-    @Test
-    void isValidRowShouldReturnFalseForNullInput() {
-        // when
-        boolean actual = validator.isValidRow(null);
+        boolean actual = validator.isValidRow(row);
         // then
         assertFalse(actual);
     }

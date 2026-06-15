@@ -1,7 +1,6 @@
 package by.innowise.arraystask.service;
 
 import by.innowise.arraystask.entity.CustomIntegerArray;
-import by.innowise.arraystask.exception.ArrayTaskException;
 import by.innowise.arraystask.service.impl.ArrayCalculationServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +19,7 @@ class ArrayCalculationServiceImplTest {
     }
 
     @Test
-    void findMinShouldReturnMinimumElement() throws ArrayTaskException {
+    void findMinShouldReturnMinimumElement() {
         // given
         CustomIntegerArray customIntegerArray = new CustomIntegerArray(arrayValues);
         int expected = 1;
@@ -34,7 +33,7 @@ class ArrayCalculationServiceImplTest {
     }
 
     @Test
-    void findMaxShouldReturnMaximumElement() throws ArrayTaskException {
+    void findMaxShouldReturnMaximumElement() {
         // given
         CustomIntegerArray customIntegerArray = new CustomIntegerArray(arrayValues);
         int expected = 5;
@@ -48,7 +47,7 @@ class ArrayCalculationServiceImplTest {
     }
 
     @Test
-    void calculateSumShouldReturnSumOfElements() throws ArrayTaskException {
+    void calculateSumShouldReturnSumOfElements() {
         // given
         CustomIntegerArray customIntegerArray = new CustomIntegerArray(arrayValues);
         int expected = 10;
@@ -62,7 +61,7 @@ class ArrayCalculationServiceImplTest {
     }
 
     @Test
-    void calculateAverageShouldReturnAverageValue() throws ArrayTaskException {
+    void calculateAverageShouldReturnAverageValue() {
         // given
         CustomIntegerArray customIntegerArray = new CustomIntegerArray(arrayValues);
         double expected = 2.5;

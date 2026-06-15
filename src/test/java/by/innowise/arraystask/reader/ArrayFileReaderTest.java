@@ -4,6 +4,8 @@ import by.innowise.arraystask.exception.ArrayTaskException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.*;
 
 import java.util.List;
 
@@ -25,13 +27,20 @@ class ArrayFileReaderTest {
         // when
         List<String> actual = reader.readFileData(VALID_PATH);
         // then
-        assertEquals(expectedSize, actual.size());
+        assertAll(
+                () -> assertEquals(expectedSize, actual.size()),
+                () -> assertFalse(actual.isEmpty())
+        );
     }
 
-    @Test
-    void readFileDataShouldThrowExceptionForNonExistingFile() {
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {
+            INVALID_PATH
+    })
+    void readFileDataShouldThrowExceptionForInvalidPath(String path) {
         // when + then
-        assertThrows(ArrayTaskException.class, () -> reader.readFileData(INVALID_PATH));
+        assertThrows(ArrayTaskException.class, () -> reader.readFileData(path));
     }
 
     @AfterEach

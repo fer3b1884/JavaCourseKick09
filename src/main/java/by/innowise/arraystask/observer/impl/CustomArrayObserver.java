@@ -16,7 +16,6 @@ public class CustomArrayObserver implements ArrayObserver {
 
     @Override
     public void update(CustomIntegerArray array) {
-        logger.info("Array id={} changed. Recalculating parameters", array.getId());
         ArrayCalculationService service = new ArrayCalculationServiceImpl();
         Optional<Integer> minOptional = service.findMin(array);
         Optional<Integer> maxOptional = service.findMax(array);
@@ -30,6 +29,6 @@ public class CustomArrayObserver implements ArrayObserver {
         Warehouse warehouse = Warehouse.getInstance();
         long arrayId = array.getId();
         warehouse.put(arrayId, parameters);  // replace old one
-        logger.info("Warehouse updated for array id={}", array.getId());
+        logger.info("Array id={} changed. Warehouse is updated.", array.getId());
     }
 }

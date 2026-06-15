@@ -13,7 +13,7 @@ class ArraySortingServiceImplTest {
     private static final int[] unsortedArray = {1, 9, 5, 8, 4, 6, 2, 7, 3};
     private static final int[] sortedArray = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     private static final int[] emptyArray = {};
-    private static final ArraySortingService service = new ArraySortingServiceImpl();;
+    private static final ArraySortingService service = new ArraySortingServiceImpl();
 
     @BeforeEach
     void setUp() {

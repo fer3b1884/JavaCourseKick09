@@ -17,7 +17,7 @@ class CustomIntegerArrayTest {
     }
 
     @Test
-    void constructorShouldGenerateUniqueIds() throws ArrayTaskException {
+    void constructorShouldGenerateUniqueIds() {
         // when
         CustomIntegerArray first = new CustomIntegerArray(new int[]{1});
         CustomIntegerArray second = new CustomIntegerArray(new int[]{2});
@@ -42,7 +42,7 @@ class CustomIntegerArrayTest {
     }
 
     @Test
-    void constructorShouldCreateCopyOfInputArray() throws ArrayTaskException {
+    void constructorShouldCreateCopyOfInputArray() {
         // given
         int[] expected = new int[]{1, 2, 3};
         int[] source = {1, 2, 3};
@@ -54,7 +54,7 @@ class CustomIntegerArrayTest {
     }
 
     @Test
-    void getArrayShouldReturnCopyOfInternalArray() throws ArrayTaskException{
+    void getArrayShouldReturnCopyOfInternalArray() {
         // given
         int[] expected = new int[]{1, 2, 3};
         CustomIntegerArray array = new CustomIntegerArray(new int[]{1, 2, 3});
@@ -77,7 +77,7 @@ class CustomIntegerArrayTest {
     }
 
     @Test
-    void setElementShouldThrowExceptionForInvalidIndex() throws ArrayTaskException {
+    void setElementShouldThrowExceptionForInvalidIndex() {
         // given
         CustomIntegerArray array = new CustomIntegerArray(new int[]{1, 2, 3});
         // when + then
@@ -96,10 +96,10 @@ class CustomIntegerArrayTest {
         ArrayParameters actual = warehouse.get(array.getId());
         assertAll(
                 () -> assertNotNull(actual),
-                () -> assertEquals(2, actual.getMin()),
-                () -> assertEquals(100, actual.getMax()),
-                () -> assertEquals(105, actual.getSum()),
-                () -> assertEquals(35.0, actual.getAverage())
+                () -> assertEquals(2, actual.min()),
+                () -> assertEquals(100, actual.max()),
+                () -> assertEquals(105, actual.sum()),
+                () -> assertEquals(35.0, actual.average())
         );
     }
 

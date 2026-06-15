@@ -12,7 +12,6 @@ public class ArrayCalculationServiceImpl implements ArrayCalculationService {
 
     @Override
     public Optional<Integer> findMin(CustomIntegerArray customIntegerArray) {
-        logger.info("Searching minimum element");
         if (customIntegerArray == null) {
             logger.warn("Cannot find minimum element: customIntegerArray is null");
             return Optional.empty();
@@ -34,7 +33,6 @@ public class ArrayCalculationServiceImpl implements ArrayCalculationService {
 
     @Override
     public Optional<Integer> findMax(CustomIntegerArray customIntegerArray) {
-        logger.info("Searching maximum element");
         if (customIntegerArray == null) {
             logger.warn("Cannot find maximum element: customIntegerArray is null");
             return Optional.empty();
@@ -56,7 +54,6 @@ public class ArrayCalculationServiceImpl implements ArrayCalculationService {
 
     @Override
     public Optional<Integer> calculateSum(CustomIntegerArray customIntegerArray) {
-        logger.info("Calculating sum");
         if (customIntegerArray == null) {
             logger.warn("Cannot calculate sum of element: customIntegerArray is null");
             return Optional.empty();
@@ -76,7 +73,6 @@ public class ArrayCalculationServiceImpl implements ArrayCalculationService {
 
     @Override
     public Optional<Double> calculateAverage(CustomIntegerArray customIntegerArray) {
-        logger.info("Calculating average value");
         if (customIntegerArray == null) {
             logger.warn("Cannot calculate average of element: customIntegerArray is null");
             return Optional.empty();

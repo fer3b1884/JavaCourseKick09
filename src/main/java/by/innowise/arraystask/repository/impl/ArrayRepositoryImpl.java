@@ -17,10 +17,10 @@ import java.util.StringJoiner;
 public class ArrayRepositoryImpl implements ArrayRepository {
     private static final Logger logger = LogManager.getLogger(ArrayRepositoryImpl.class);
     private static ArrayRepositoryImpl instance;
-    private final List<CustomIntegerArray> arrays;
+    private final List<CustomIntegerArray> listOfArrays;
 
     private ArrayRepositoryImpl() {  // constructor is private (singleton pattern)
-        arrays = new ArrayList<>();
+        listOfArrays = new ArrayList<>();
     }
 
     public static ArrayRepositoryImpl getInstance() {  // singleton alternative constructor
@@ -39,7 +39,7 @@ public class ArrayRepositoryImpl implements ArrayRepository {
         }
         customIntegerArray.attachObserver(new CustomArrayObserver());
         customIntegerArray.notifyObserver();
-        arrays.add(customIntegerArray);
+        listOfArrays.add(customIntegerArray);
         logger.info("Array with id {} added to repository", customIntegerArray.getId());
     }
 
@@ -52,13 +52,13 @@ public class ArrayRepositoryImpl implements ArrayRepository {
         customIntegerArray.detachObserver();
         Warehouse warehouse = Warehouse.getInstance();
         warehouse.remove(customIntegerArray.getId());
-        arrays.remove(customIntegerArray);
+        listOfArrays.remove(customIntegerArray);
         logger.info("Array with id {} removed from repository", customIntegerArray.getId());
     }
 
     @Override
-    public List<CustomIntegerArray> getAll() {
-        return new ArrayList<>(arrays);
+    public List<CustomIntegerArray> getAll() {  // is used only for tests
+        return new ArrayList<>(listOfArrays);  // returns copy of list
     }
 
     @Override
@@ -69,7 +69,7 @@ public class ArrayRepositoryImpl implements ArrayRepository {
         }
         logger.info("Executing specification: {}", specification);
         List<CustomIntegerArray> result = new ArrayList<>();
-        for (CustomIntegerArray array : arrays) {
+        for (CustomIntegerArray array : listOfArrays) {
             if (specification.specify(array)) {
                 result.add(array);
             }
@@ -84,7 +84,7 @@ public class ArrayRepositoryImpl implements ArrayRepository {
             logger.error("Comparator is null");
             throw new ArrayTaskException("Comparator cannot be null");
         }
-        arrays.sort(comparator);
+        listOfArrays.sort(comparator);
         Class<?> comparatorClass = comparator.getClass();  // is used for logger output
         logger.info("Repository sorted using comparator: {}", comparatorClass.getSimpleName());
     }
@@ -92,7 +92,7 @@ public class ArrayRepositoryImpl implements ArrayRepository {
     @Override
     public String toString() {
         return new StringJoiner(", ", ArrayRepositoryImpl.class.getSimpleName() + "[", "]")
-                .add("arrays=" + arrays)
+                .add("arrays=" + listOfArrays)
                 .toString();
     }
 }

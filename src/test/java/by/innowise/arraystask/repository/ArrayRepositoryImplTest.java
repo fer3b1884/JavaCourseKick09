@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArrayRepositoryImplTest {
     private static final int[] array1 = new int[]{1, 2, 3};
     private static final int[] array2 = new int[]{10, 20, 30};
-    private static final ArrayRepository repository = ArrayRepositoryImpl.getInstance();;
+    private static final ArrayRepository repository = ArrayRepositoryImpl.getInstance();
     private CustomIntegerArray customArray1;
     private CustomIntegerArray customArray2;
 
@@ -74,23 +74,6 @@ class ArrayRepositoryImplTest {
 
     @Test
     void queryShouldReturnArrayWithMatchingId() throws ArrayTaskException {
-        // given
-        int expectedSize = 1;
-        repository.addCustomIntegerArray(customArray1);
-        repository.addCustomIntegerArray(customArray2);
-        long targetId = customArray1.getId();
-        Specification specification = new IdSpecification(targetId);
-        // when
-        List<CustomIntegerArray> actual = repository.query(specification);
-        // then
-        assertAll(
-                () -> assertEquals(expectedSize, actual.size()),
-                () -> assertEquals(targetId, actual.getFirst().getId())
-        );
-    }
-
-    @Test
-    void queryShouldReturnArraysWithMatchingId() throws ArrayTaskException {
         // given
         int expectedSize = 1;
         repository.addCustomIntegerArray(customArray1);
