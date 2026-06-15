@@ -13,13 +13,14 @@ public class CustomIntegerArray implements Observable {
     private int[] integerArray;
     private ArrayObserver observer;
 
-    public CustomIntegerArray(int[] inputArray) /*throws ArrayTaskException*/ {
-        if (inputArray == null) {
+    public CustomIntegerArray(int[] integerArray) /*throws ArrayTaskException*/ {
+        if (integerArray == null) {
 //            throw new ArrayTaskException("Input array cannot be null");
-            integerArray = new int[0];
+            this.integerArray = new int[0];
+        } else {
+            this.integerArray = Arrays.copyOf(integerArray, integerArray.length);
         }
         this.id = ArrayIdGenerator.nextId();
-        this.integerArray = Arrays.copyOf(inputArray, inputArray.length);
     }
 
     public long getId() {

@@ -29,10 +29,10 @@ class CustomArrayObserverTest {
         ArrayParameters actual = warehouse.get(array.getId());
         assertAll(
                 () -> assertNotNull(actual),
-                () -> assertEquals(1, actual.getMin()),
-                () -> assertEquals(3, actual.getMax()),
-                () -> assertEquals(6, actual.getSum()),
-                () -> assertEquals(2.0, actual.getAverage())
+                () -> assertEquals(1, actual.min()),
+                () -> assertEquals(3, actual.max()),
+                () -> assertEquals(6, actual.sum()),
+                () -> assertEquals(2.0, actual.average())
         );
     }
 
@@ -48,10 +48,10 @@ class CustomArrayObserverTest {
         ArrayParameters actual = warehouse.get(array.getId());
         assertAll(
                 () -> assertNotNull(actual),
-                () -> assertEquals(10, actual.getMin()),
-                () -> assertEquals(20, actual.getMax()),
-                () -> assertEquals(30, actual.getSum()),
-                () -> assertEquals(15.0, actual.getAverage())
+                () -> assertEquals(10, actual.min()),
+                () -> assertEquals(20, actual.max()),
+                () -> assertEquals(30, actual.sum()),
+                () -> assertEquals(15.0, actual.average())
         );
     }
 

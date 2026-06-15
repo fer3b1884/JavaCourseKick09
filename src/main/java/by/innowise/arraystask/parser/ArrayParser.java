@@ -15,7 +15,6 @@ public class ArrayParser {
     private static final String NUMBER_REGEX = "-?\\d+";
 
     public int[] parseString(String row) throws ArrayTaskException {
-        logger.info("Parsing row: {}", row);
         ArrayValidator validator = new ArrayValidator();
         if (!validator.isValidRow(row)) {
             logger.warn("Row failed validation: {}", row);
@@ -35,7 +34,7 @@ public class ArrayParser {
             int value = list.get(i);
             result[i] = value;
         }
-        logger.info("Parsed {} elements from row", result.length);
+        logger.info("Parsed {} elements from row: {}", result.length, row);
         return result;
     }
 }

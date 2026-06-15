@@ -11,7 +11,6 @@ public class ArraySortingServiceImpl implements ArraySortingService {
 
     @Override
     public void bubbleSort(CustomIntegerArray customIntegerArray) throws ArrayTaskException {
-        logger.info("Bubble sort started");
         if (customIntegerArray == null) {
             logger.error("Bubble sort failed: array reference is null");
             throw new ArrayTaskException("The passed CustomIntegerArray object reference is null");
@@ -38,7 +37,6 @@ public class ArraySortingServiceImpl implements ArraySortingService {
 
     @Override
     public void insertionSort(CustomIntegerArray customIntegerArray) throws ArrayTaskException {
-        logger.info("Insertion sort started");
         if (customIntegerArray == null) {
             logger.error("Insertion sort failed: array reference is null");
             throw new ArrayTaskException("The passed CustomIntegerArray object reference is null");

@@ -2,17 +2,14 @@ package by.innowise.arraystask.validator;
 
 public class ArrayValidator {
     private static final String ARRAY_ROW_REGEX = "[-\\d\\s,;]+";
-//    private static final String ARRAY_ROW_REGEX = "^\\s*-?\\d+(\\s*[-,;]\\s*-?\\d+|\\s+-?\\d+)*\\s*$";
 
     public boolean isValidRow(String inputRow) {
         if (inputRow == null) {
             return false;
         }
-        String strippedString = inputRow.strip();
-        if (strippedString.isEmpty()) {
+        if (inputRow.isBlank()) {
             return true;  // empty line in terms of task is correct
         }
-        boolean matches = strippedString.matches(ARRAY_ROW_REGEX);
-        return matches;
+        return inputRow.matches(ARRAY_ROW_REGEX);
     }
 }
