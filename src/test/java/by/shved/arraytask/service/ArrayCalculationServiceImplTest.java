@@ -1,0 +1,80 @@
+package by.shved.arraytask.service;
+
+import by.shved.arraytask.entity.CustomIntegerArray;
+import by.shved.arraytask.service.impl.ArrayCalculationServiceImpl;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class ArrayCalculationServiceImplTest {
+    private static final int[] arrayValues = new int[] { 1, 2, 5, 2 };
+    private static final ArrayCalculationService service = new ArrayCalculationServiceImpl();
+
+    @BeforeEach
+    void setUp() {
+    }
+
+    @Test
+    void findMinShouldReturnMinimumElement() {
+        // given
+        CustomIntegerArray customIntegerArray = new CustomIntegerArray(arrayValues);
+        int expected = 1;
+        // when
+        Optional<Integer> result = service.findMin(customIntegerArray);
+        // then
+        assertAll(
+                () -> assertTrue(result.isPresent()),
+                () -> assertEquals(expected, result.get())
+        );
+    }
+
+    @Test
+    void findMaxShouldReturnMaximumElement() {
+        // given
+        CustomIntegerArray customIntegerArray = new CustomIntegerArray(arrayValues);
+        int expected = 5;
+        // when
+        Optional<Integer> result = service.findMax(customIntegerArray);
+        // then
+        assertAll(
+                () -> assertTrue(result.isPresent()),
+                () -> assertEquals(expected, result.get())
+        );
+    }
+
+    @Test
+    void calculateSumShouldReturnSumOfElements() {
+        // given
+        CustomIntegerArray customIntegerArray = new CustomIntegerArray(arrayValues);
+        int expected = 10;
+        // when
+        Optional<Integer> result = service.calculateSum(customIntegerArray);
+        // then
+        assertAll(
+                () -> assertTrue(result.isPresent()),
+                () -> assertEquals(expected, result.get())
+        );
+    }
+
+    @Test
+    void calculateAverageShouldReturnAverageValue() {
+        // given
+        CustomIntegerArray customIntegerArray = new CustomIntegerArray(arrayValues);
+        double expected = 2.5;
+        // when
+        Optional<Double> result = service.calculateAverage(customIntegerArray);
+        // then
+        assertAll(
+                () -> assertTrue(result.isPresent()),
+                () -> assertEquals(expected, result.get())
+        );
+    }
+
+    @AfterEach
+    void tearDown() {
+    }
+}
