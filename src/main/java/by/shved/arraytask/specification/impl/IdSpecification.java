@@ -13,7 +13,7 @@ public class IdSpecification implements Specification {
     }
 
     public boolean specify(CustomIntegerArray customIntegerArray) {
-        return customIntegerArray != null && customIntegerArray.getId() == targetId;
+        return customIntegerArray.getId() == targetId;
     }
 
     @Override
