@@ -4,6 +4,8 @@ import by.shved.arraytask.entity.CustomIntegerArray;
 import by.shved.arraytask.exception.ArrayTaskException;
 import by.shved.arraytask.repository.ArrayRepository;
 import by.shved.arraytask.repository.impl.ArrayRepositoryImpl;
+import by.shved.arraytask.specification.Specification;
+import by.shved.arraytask.specification.impl.AllArraysSpecification;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +26,8 @@ class ArrayComparatorTest {
 
     @BeforeEach
     void setUp() throws ArrayTaskException {
-        for (CustomIntegerArray array : repository.getAll()) {
+        Specification specification = new AllArraysSpecification();
+        for (CustomIntegerArray array : repository.query(specification)) {
             repository.removeCustomIntegerArray(array);
         }
         customArray1 = new CustomIntegerArray(array1);
@@ -44,7 +47,7 @@ class ArrayComparatorTest {
         // when
         repository.sort(new ArrayIdComparator());
         // then
-        List<CustomIntegerArray> actual = repository.getAll();
+        List<CustomIntegerArray> actual = repository.query(new AllArraysSpecification());
         assertAll(
                 () -> assertEquals(firstExpectedId, actual.get(0).getId()),
                 () -> assertEquals(secondExpectedId, actual.get(1).getId()),
@@ -64,7 +67,7 @@ class ArrayComparatorTest {
         // when
         repository.sort(new ArrayLengthComparator());
         // then
-        List<CustomIntegerArray> actual = repository.getAll();
+        List<CustomIntegerArray> actual = repository.query(new AllArraysSpecification());
         assertAll(
                 () -> assertEquals(secondArrayLength, actual.get(0).length()),
                 () -> assertEquals(thirdArrayLength, actual.get(1).length()),
@@ -84,7 +87,7 @@ class ArrayComparatorTest {
         // when
         repository.sort(new ArrayFirstElementComparator());
         // then
-        List<CustomIntegerArray> actual = repository.getAll();
+        List<CustomIntegerArray> actual = repository.query(new AllArraysSpecification());
         assertAll(
                 () -> assertEquals(secondArrayElement, actual.get(0).getArray()[0]),
                 () -> assertEquals(thirdArrayElement, actual.get(1).getArray()[0]),

@@ -4,6 +4,7 @@ import by.shved.arraytask.entity.CustomIntegerArray;
 import by.shved.arraytask.exception.ArrayTaskException;
 import by.shved.arraytask.repository.impl.ArrayRepositoryImpl;
 import by.shved.arraytask.specification.Specification;
+import by.shved.arraytask.specification.impl.AllArraysSpecification;
 import by.shved.arraytask.specification.impl.IdSpecification;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +24,8 @@ class ArrayRepositoryImplTest {
     @BeforeEach
     void setUp() throws ArrayTaskException {
         // cleaning the repository before each test
-        for (CustomIntegerArray array : repository.getAll()) {
+        Specification specification = new AllArraysSpecification();
+        for (CustomIntegerArray array : repository.query(specification)) {
             repository.removeCustomIntegerArray(array);
         }
         customArray1 = new CustomIntegerArray(array1);
@@ -44,7 +46,7 @@ class ArrayRepositoryImplTest {
         int expectedSize = 1;
         // when
         repository.addCustomIntegerArray(customArray1);
-        List<CustomIntegerArray> actual = repository.getAll();
+        List<CustomIntegerArray> actual = repository.query(new AllArraysSpecification());
         // then
         assertEquals(expectedSize, actual.size());
     }
@@ -62,7 +64,7 @@ class ArrayRepositoryImplTest {
         // when
         repository.removeCustomIntegerArray(customArray1);
         // then
-        List<CustomIntegerArray> actual = repository.getAll();
+        List<CustomIntegerArray> actual = repository.query(new AllArraysSpecification());
         assertTrue(actual.isEmpty());
     }
 
@@ -90,6 +92,23 @@ class ArrayRepositoryImplTest {
     }
 
     @Test
+    void functionalQueryShouldReturnArrayWithMatchingId() throws ArrayTaskException {
+        // given
+        int expectedSize = 1;
+        repository.addCustomIntegerArray(customArray1);
+        repository.addCustomIntegerArray(customArray2);
+        long targetId = customArray1.getId();
+        Specification specification = new IdSpecification(targetId);
+        // when
+        List<CustomIntegerArray> actual = repository.functionalQuery(specification);
+        // then
+        assertAll(
+                () -> assertEquals(expectedSize, actual.size()),
+                () -> assertEquals(targetId, actual.getFirst().getId())
+        );
+    }
+
+    @Test
     void queryShouldReturnEmptyListWhenIdDoesNotMatch() throws ArrayTaskException {
         // given
         repository.addCustomIntegerArray(customArray1);
@@ -109,13 +128,14 @@ class ArrayRepositoryImplTest {
     }
 
     @Test
-    void getAllShouldReturnAllStoredArrays() throws ArrayTaskException {
+    void queryShouldReturnAllStoredArrays() throws ArrayTaskException {
         // given
         int expectedSize = 2;
         repository.addCustomIntegerArray(customArray1);
         repository.addCustomIntegerArray(customArray2);
         // when
-        List<CustomIntegerArray> actual = repository.getAll();
+        List<CustomIntegerArray> actual =
+                repository.query(new AllArraysSpecification());
         // then
         assertAll(
                 () -> assertEquals(expectedSize, actual.size()),

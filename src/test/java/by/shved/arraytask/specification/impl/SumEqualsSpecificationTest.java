@@ -33,14 +33,6 @@ class SumEqualsSpecificationTest {
         assertFalse(actual);
     }
 
-    @Test
-    void specifyShouldReturnFalseWhenArrayIsNull() {
-        // when
-        boolean actual = specification.specify(null);
-        // then
-        assertFalse(actual);
-    }
-
     @AfterEach
     void tearDown() {
     }

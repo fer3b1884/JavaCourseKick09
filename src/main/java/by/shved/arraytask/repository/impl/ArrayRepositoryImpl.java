@@ -57,11 +57,6 @@ public class ArrayRepositoryImpl implements ArrayRepository {
     }
 
     @Override
-    public List<CustomIntegerArray> getAll() {  // is used only for tests
-        return new ArrayList<>(listOfArrays);  // returns copy of list
-    }
-
-    @Override
     public List<CustomIntegerArray> query(Specification specification) throws ArrayTaskException {
         if (specification == null) {
             logger.error("Specification is null");
@@ -74,6 +69,20 @@ public class ArrayRepositoryImpl implements ArrayRepository {
                 result.add(array);
             }
         }
+        logger.info("Query completed. Found {} arrays", result.size());
+        return result;
+    }
+
+    @Override
+    public List<CustomIntegerArray> functionalQuery(Specification specification) throws ArrayTaskException {
+        if (specification == null) {
+            logger.error("Specification is null");
+            throw new ArrayTaskException("Specification cannot be null");
+        }
+        logger.info("Executing specification: {}", specification);
+        List<CustomIntegerArray> result = listOfArrays.stream()
+                .filter(specification::specify)  // array -> specification.specify(array)
+                .toList();
         logger.info("Query completed. Found {} arrays", result.size());
         return result;
     }
